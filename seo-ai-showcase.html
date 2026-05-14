@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO 文章 AI 優化展示｜作品集</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F4EF;
+    --surface: #FFFFFF;
+    --ink: #1A1714;
+    --ink-muted: #6B6560;
+    --ink-faint: #AEA9A3;
+    --accent: #C4471A;
+    --accent-soft: #F5E8E2;
+    --green: #2A6B3C;
+    --green-soft: #E3F0E7;
+    --border: #E2DDD8;
+    --tag-bg: #EDE9E3;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    color: #fff;
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: 'SEO';
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    font-size: 180px;
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 700;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .header-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  header h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(1.5rem, 4vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.25;
+    max-width: 640px;
+    margin-bottom: 1rem;
+  }
+  header p {
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    max-width: 520px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+  }
+  .meta-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+  /* ── MAIN LAYOUT ── */
+  main { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  /* ── SECTION LABELS ── */
+  .section-intro {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .section-intro h2 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  .section-intro p { font-size: 13.5px; color: var(--ink-muted); line-height: 1.7; }
+
+  /* ── PROMPT LOG ── */
+  .prompt-section { margin-bottom: 2.5rem; }
+  .prompt-section h2 {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .prompt-section h2::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .prompt-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+  .prompt-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.85rem 1.25rem;
+    background: #F9F7F4;
+    border-bottom: 1px solid var(--border);
+  }
+  .prompt-step {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .prompt-header span {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-muted);
+  }
+  .prompt-header .tool-tag {
+    margin-left: auto;
+    font-size: 11px;
+    background: var(--tag-bg);
+    color: var(--ink-muted);
+    padding: 2px 10px;
+    border-radius: 20px;
+  }
+  .prompt-body { padding: 1rem 1.25rem; }
+  .prompt-label {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    margin-bottom: 0.4rem;
+  }
+  .prompt-text {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 13.5px;
+    background: #F2EFE9;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    color: var(--ink);
+    line-height: 1.65;
+    border-left: 3px solid var(--accent);
+    margin-bottom: 0.75rem;
+    white-space: pre-wrap;
+  }
+  .prompt-note {
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    display: flex;
+    gap: 6px;
+  }
+  .prompt-note::before { content: '→'; color: var(--accent); flex-shrink: 0; }
+
+  /* ── COMPARISON ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+  @media (max-width: 680px) { .compare-grid { grid-template-columns: 1fr; } }
+
+  .article-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-header.before { background: #FBF8F5; }
+  .card-header.after { background: var(--green-soft); }
+  .badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+  .badge.before { background: var(--tag-bg); color: var(--ink-muted); }
+  .badge.after { background: var(--green-soft); color: var(--green); border: 1px solid #b5d9bf; }
+  .card-header p { font-size: 12px; color: var(--ink-muted); }
+
+  .card-body { padding: 1.25rem; }
+  .article-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+  .article-title.before { color: var(--ink); }
+  .article-title.after { color: #1A3F25; }
+
+  .meta-row {
+    font-size: 12px;
+    color: var(--ink-faint);
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .seo-score {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+  .seo-score.low { background: #FEF2EE; color: var(--accent); }
+  .seo-score.high { background: var(--green-soft); color: var(--green); }
+
+  .article-body { font-size: 13.5px; color: var(--ink); line-height: 1.8; }
+  .article-body h3 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 1rem 0 0.4rem;
+    color: var(--ink);
+  }
+  .article-body p { margin-bottom: 0.85rem; }
+  .article-body ul { padding-left: 1.2rem; margin-bottom: 0.85rem; }
+  .article-body ul li { margin-bottom: 0.3rem; }
+
+  .highlight { background: #FFF3CD; border-radius: 3px; padding: 1px 3px; }
+  .highlight.green { background: #D4EDDA; }
+
+  .diff-tag {
+    font-size: 11px;
+    padding: 1px 7px;
+    border-radius: 10px;
+    vertical-align: middle;
+    margin-left: 4px;
+    font-weight: 500;
+  }
+  .diff-added { background: #D4EDDA; color: #1A5C2B; }
+  .diff-improved { background: #FFF3CD; color: #7A5C00; }
+
+  /* ── DIFF ANALYSIS ── */
+  .diff-section { margin-bottom: 2.5rem; }
+  .diff-table {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    border-collapse: collapse;
+  }
+  .diff-table th {
+    background: #F2EFE9;
+    padding: 0.85rem 1.25rem;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .diff-table td {
+    padding: 0.85rem 1.25rem;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .diff-table tr:last-child td { border-bottom: none; }
+  .diff-table .item-name { font-weight: 500; color: var(--ink); }
+  .diff-table .before-val { color: var(--ink-muted); }
+  .diff-table .after-val { color: var(--green); font-weight: 500; }
+  .diff-table .reason { color: var(--ink-muted); font-size: 12px; }
+  .arrow { color: var(--ink-faint); font-size: 16px; }
+
+  /* ── TIPS ── */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .tip-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+  }
+  .tip-num {
+    font-size: 28px;
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .tip-title { font-size: 13px; font-weight: 500; margin-bottom: 0.35rem; }
+  .tip-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.6; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 12px;
+    color: var(--ink-faint);
+    border-top: 1px solid var(--border);
+    margin-top: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div style="max-width:1100px; margin:0 auto; padding: 0 1.5rem;">
+    <div class="header-label">作品集展示 · AI 輔助行銷</div>
+    <h1>SEO 部落格文章<br>AI 優化前後對比</h1>
+    <p>以「咖啡廳行銷策略」為主題，展示如何運用 Claude 進行 SEO 關鍵字佈局、標題優化與內文結構改寫，並附完整 Prompt 紀錄。</p>
+    <div class="header-meta">
+      <div class="meta-item"><div class="meta-dot"></div>主題：咖啡廳社群行銷</div>
+      <div class="meta-item"><div class="meta-dot"></div>工具：Claude 3.5 Sonnet</div>
+      <div class="meta-item"><div class="meta-dot"></div>目標關鍵字：咖啡廳行銷、IG 經營、小店曝光</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- INTRO -->
+  <div class="section-intro">
+    <h2>📋 這份作品在展示什麼？</h2>
+    <p>本頁面模擬一個實際工作場景：行銷人員拿到一篇品質普通的初稿，透過 AI 工具進行系統性的 SEO 優化。完整呈現三個層次：<strong>① Prompt 設計邏輯</strong>、<strong>② 優化前後內容對比</strong>、<strong>③ 各項 SEO 指標改善分析</strong>，展示 AI 工具在內容行銷流程中的實際應用方式。</p>
+  </div>
+
+  <!-- PROMPT LOG -->
+  <div class="prompt-section">
+    <h2>Prompt 使用紀錄</h2>
+
+    <div class="prompt-card">
+      <div class="prompt-header">
+        <div class="prompt-step">1</div>
+        <span>關鍵字研究與定位</span>
+        <span class="tool-tag">Claude</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-label">使用的 Prompt</div>
+        <div class="prompt-text">我想為一間台灣的獨立咖啡廳撰寫一篇 SEO 部落格文章。目標讀者是 25-35 歲、有在使用 Instagram 的咖啡廳老闆或行銷人員。
+
+請幫我：
+1. 列出 5 個適合的主要關鍵字（月搜尋量中等、競爭度低）
+2. 列出 8 個相關的長尾關鍵字
+3. 建議文章標題方向（3 個選項）
+4. 說明這些關鍵字的搜尋意圖</div>
+        <div class="prompt-note">明確定義目標受眾、地區，並拆分任務步驟，避免 AI 給出過於廣泛的答案</div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-header">
+        <div class="prompt-step">2</div>
+        <span>文章結構規劃</span>
+        <span class="tool-tag">Claude</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-label">使用的 Prompt</div>
+        <div class="prompt-text">根據以上關鍵字分析，請為標題「2025 咖啡廳 IG 行銷攻略：5 個讓小店月增 300 追蹤的實戰技巧」規劃 SEO 文章架構。
+
+要求：
+- 文章長度目標：1200-1500 字
+- H2 標題需自然包含關鍵字
+- 每個段落重點 1 個，不要堆疊
+- 加入一個 FAQ 區塊（3 個問題）
+- 結尾需有明確的 CTA</div>
+        <div class="prompt-note">給定標題與字數限制，讓 AI 在明確框架內規劃結構</div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-header">
+        <div class="prompt-step">3</div>
+        <span>初稿改寫與 SEO 優化</span>
+        <span class="tool-tag">Claude</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-label">使用的 Prompt</div>
+        <div class="prompt-text">以下是我寫的初稿，請幫我進行 SEO 優化改寫：
+
+[貼上初稿內容]
+
+優化重點：
+1. 標題改為包含主關鍵字「咖啡廳行銷」的 H1
+2. 第一段前 100 字內自然帶入關鍵字
+3. 增加內部連結錨點文字建議（用 [連結:xxx] 標示）
+4. 改善可讀性：長句拆短、適當加入小標
+5. 保持自然口語感，不要寫得像教科書
+6. 最後給我一段 Meta Description（155 字以內）</div>
+        <div class="prompt-note">把優化項目逐點列出，讓 AI 有明確的改寫依據，不會改過頭</div>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-header">
+        <div class="prompt-step">4</div>
+        <span>品質確認與微調</span>
+        <span class="tool-tag">Claude</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-label">使用的 Prompt</div>
+        <div class="prompt-text">請檢查這篇文章並回報：
+- 關鍵字密度是否在 1-2% 之間？
+- 有無關鍵字堆砌（keyword stuffing）的問題？
+- 標題層級（H1/H2/H3）是否正確？
+- 有沒有任何讀起來不自然的句子？
+
+如果有問題，請直接修正並說明改了什麼。</div>
+        <div class="prompt-note">用「審查 + 修正」的方式，讓 AI 扮演編輯角色做最後把關</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARISON -->
+  <div class="prompt-section">
+    <h2>優化前後對比</h2>
+  </div>
+
+  <div class="compare-grid">
+    <!-- BEFORE -->
+    <div class="article-card">
+      <div class="card-header before">
+        <span class="badge before">優化前</span>
+        <p>人工初稿，未進行 SEO 處理</p>
+      </div>
+      <div class="card-body">
+        <div class="seo-score low">● SEO 評分：42 / 100</div>
+        <div class="article-title before">咖啡廳要怎麼用社群媒體？</div>
+        <div class="meta-row">
+          <span>字數：約 480 字</span>
+          <span>關鍵字密度：0.3%</span>
+        </div>
+        <div class="article-body">
+          <p>很多咖啡廳老闆都覺得社群媒體很重要，但是不知道怎麼做。其實只要掌握幾個方法就可以了。</p>
+          <h3>發文</h3>
+          <p>要常常發文，最好每天都發。可以拍一些咖啡的照片，或者店裡的環境。</p>
+          <p>hashtag 也很重要，要記得加。可以加一些相關的 tag，這樣比較多人看得到。</p>
+          <h3>跟客人互動</h3>
+          <p>看到留言要回，這樣客人會覺得你很重視他們。也可以辦一些活動，讓大家來參加。</p>
+          <p>限時動態也可以多用，上面可以放一些比較輕鬆的內容，或者問一些問題。</p>
+          <h3>廣告</h3>
+          <p>如果有預算的話可以考慮打廣告，這樣可以讓更多人看到你的貼文。但是廣告費用可能比較貴，所以要考慮清楚。</p>
+          <p>總之社群媒體對咖啡廳很重要，希望以上的建議對你有幫助。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- AFTER -->
+    <div class="article-card">
+      <div class="card-header after">
+        <span class="badge after">✓ 優化後</span>
+        <p>AI 輔助 SEO 改寫完成</p>
+      </div>
+      <div class="card-body">
+        <div class="seo-score high">● SEO 評分：88 / 100</div>
+        <div class="article-title after">2025 咖啡廳行銷攻略：5 個讓小店 IG 月增 300 粉絲的實戰技巧</div>
+        <div class="meta-row">
+          <span>字數：約 1,350 字</span>
+          <span>關鍵字密度：1.4%</span>
+        </div>
+        <div class="article-body">
+          <p>經營獨立咖啡廳，<span class="highlight green">咖啡廳行銷</span>已經不能只靠口耳相傳。根據 2024 年台灣餐飲業調查，超過 73% 的消費者在到訪新餐廳前，會先查看對方的 Instagram。這篇文章整理了 5 個實際有效的 <span class="highlight green">IG 行銷技巧</span>，不需要大預算，從今天就能開始做。</p>
+
+          <h3>1. 用「在地關鍵字」讓人找到你 <span class="diff-tag diff-added">新增</span></h3>
+          <p>在 IG 個人資料與貼文說明中加入「台北咖啡廳推薦」、「大安區咖啡」等在地標籤，搭配 Google 商家優化，能有效提升<span class="highlight green">小店曝光</span>。建議每篇貼文使用 10–15 個精準 hashtag，而不是隨意堆砌 30 個。</p>
+
+          <h3>2. 固定發文節奏比爆發更重要 <span class="diff-tag diff-improved">優化</span></h3>
+          <p>IG 演算法偏好持續活躍的帳號。建議每週至少發 3 篇貼文，並善用排程工具（如 Later 或 Buffer）規劃內容月曆，避免靈感枯竭時斷更。</p>
+
+          <h3>3. Reels 短影音是免費的流量入口</h3>
+          <p>2024 年 IG 官方數據顯示，Reels 的觸及率比靜態貼文高出 3 倍。咖啡廳可拍攝「手沖過程」、「拉花教學」等 15–30 秒短片，成本低、擴散快，是目前<strong>最具 CP 值的咖啡廳行銷</strong>方式之一。</p>
+
+          <h3>4. 把客人變成你的內容創作者</h3>
+          <p>設計一個「值得拍照」的角落或打卡餐點，並在店內放置小提示牌，鼓勵客人標記你的帳號。每週精選一篇 UGC（用戶生成內容）轉分享，既省創作成本，又增加社群真實感。</p>
+
+          <h3>5. 限時動態互動提升帳號活躍度 <span class="diff-tag diff-added">新增</span></h3>
+          <p>每日發一則限時動態，使用「投票」、「問答」或「滑動評分」功能，能有效提升互動率。高互動率帳號在 IG 演算法中享有更多自然觸及的優先排序。</p>
+
+          <h3>常見問題 FAQ</h3>
+          <p><strong>Q：沒有攝影基礎，拍出來的照片可以用嗎？</strong><br>
+          A：可以的。手機開啟「專業模式」並善用自然光（靠窗位置），搭配 Lightroom 預設集微調，就能拍出質感照片。</p>
+
+          <p><strong>Q：咖啡廳行銷一定要打廣告嗎？</strong><br>
+          A：初期不必要。先把 SEO、hashtag 和 Reels 做好，累積到 1,000 粉絲後再考慮投放，效益更高。</p>
+
+          <p style="padding: 0.85rem; background: var(--green-soft); border-radius: 8px; color: #1A3F25; font-size: 13px;">
+            📩 <strong>想讓你的咖啡廳被更多人發現？</strong><br>
+            立即下載我們的「獨立咖啡廳 IG 內容月曆模板」，30 天貼文主題一次規劃好。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIFF TABLE -->
+  <div class="diff-section">
+    <div class="prompt-section">
+      <h2>各項 SEO 指標改善分析</h2>
+    </div>
+    <table class="diff-table">
+      <thead>
+        <tr>
+          <th style="width:18%">優化項目</th>
+          <th style="width:28%">優化前</th>
+          <th style="width:8%; text-align:center">→</th>
+          <th style="width:28%">優化後</th>
+          <th style="width:18%">改善說明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="item-name">H1 標題</td>
+          <td class="before-val">「咖啡廳要怎麼用社群媒體？」（無關鍵字）</td>
+          <td class="arrow" style="text-align:center">→</td>
+          <td class="after-val">「2025 咖啡廳行銷攻略：5 個讓小店 IG 月增 300 粉絲的實戰技巧」</td>
+          <td class="reason">包含主關鍵字、數字增可信度、明確說明文章價值</td>
+        </tr>
+        <tr>
+          <td class="item-name">文章字數</td>
+          <td class="before-val">約 480 字（不足）</td>
+          <td class="arrow" style="text-align:center">→</td>
+          <td class="after-val">約 1,350 字（達標）</td>
+          <td class="reason">Google 偏好深度內容，競爭關鍵字建議 1,200 字以上</td>
+        </tr>
+        <tr>
+          <td class="item-name">關鍵字密度</td>
+          <td class="before-val">0.3%（過低）</td>
+          <td class="arrow" style="text-align:center">→</td>
+          <td class="after-val">1.4%（健康範圍）</td>
+          <td class="reason">理想密度 1–2%，過低難被搜尋引擎辨識</td>
+        </tr>
+        <tr>
+          <td class="item-name">標題層級結構</td>
+          <td class="before-val">H3 直接用於段落，無層次</td>
+          <td class="arrow" style="text-align:center">→</td>
+          <td class="after-val">H1 → H2 → H3 完整結構</td>
+          <td class="reason">正確標題層級幫助爬蟲理解文章架構</td>
+        </tr>
+        <tr>
+          <td class="item-name">首段關鍵字</td>
+          <td class="before-val">前 100 字無關鍵字出現</td>
+          <td class="arrow" style="text-align:center">→</td>
+          <td class="after-val">第 1 句即帶入「咖啡廳行銷」</td>
+          <td class="reason">首段是 Google 判斷主題相關性的重要依據</td>
+        </tr>
+        <tr>
+          <td class="item-name">Meta Description</td>
+          <td class="before-val">無</td>
+          <td class="arrow" style="text-align:center">→</td>
+          <td class="after-val">「經營咖啡廳不只靠好咖啡！這篇整理 5 個低成本咖啡廳行銷技巧，從 IG 發文節奏到 Reels 策略，讓你的小店每月穩定增粉。」（148 字）</td>
+          <td class="reason">影響搜尋結果點擊率，需含關鍵字且在 155 字內</td>
+        </tr>
+        <tr>
+          <td class="item-name">FAQ 區塊</td>
+          <td class="before-val">無</td>
+          <td class="arrow" style="text-align:center">→</td>
+          <td class="after-val">3 個常見問題解答</td>
+          <td class="reason">有助搶佔 Google「精選摘要」與 People Also Ask 區塊</td>
+        </tr>
+        <tr>
+          <td class="item-name">CTA 行動呼籲</td>
+          <td class="before-val">結尾只說「希望對你有幫助」</td>
+          <td class="arrow" style="text-align:center">→</td>
+          <td class="after-val">提供免費資源下載，引導具體行動</td>
+          <td class="reason">增加轉換率，也提升頁面停留時間（正向 SEO 訊號）</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TAKEAWAYS -->
+  <div class="prompt-section">
+    <h2>核心學習重點</h2>
+  </div>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-num">01</div>
+      <div class="tip-title">Prompt 要給邊界</div>
+      <div class="tip-desc">明確告知字數、語氣、結構要求，AI 才不會天馬行空。限制越清楚，輸出越可用。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">02</div>
+      <div class="tip-title">拆成多輪對話</div>
+      <div class="tip-desc">關鍵字研究 → 結構 → 撰文 → 審查，每步驟獨立，比一次要求全部更精準。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">03</div>
+      <div class="tip-title">人負責判斷</div>
+      <div class="tip-desc">AI 提供初稿與優化建議，行銷人員判斷哪些適合品牌調性，最終決策在人。</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">04</div>
+      <div class="tip-title">保留 Prompt 紀錄</div>
+      <div class="tip-desc">好的 Prompt 是資產。建立 SOP 文件，讓團隊成員能複製相同流程。</div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  此文件為 AI 行銷應用作品集範例 · 使用工具：Claude 3.5 Sonnet · 製作目的：求職展示
+</footer>
+
+</body>
+</html>
