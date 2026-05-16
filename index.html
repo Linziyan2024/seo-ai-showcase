@@ -1,0 +1,825 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 行銷應用作品集</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F5F2EC;
+  --ink: #1A1712;
+  --ink2: #6B6660;
+  --ink3: #B0ABA4;
+  --surface: #FFFFFF;
+  --border: rgba(26,23,18,.1);
+  --border2: rgba(26,23,18,.18);
+  --accent: #C8440F;
+  --accent2: #E8A020;
+  --line: rgba(26,23,18,.08);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.7;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .2s, height .2s, background .2s;
+  mix-blend-mode: multiply;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(200,68,15,.4);
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: transform .1s, width .3s, height .3s;
+}
+body:has(a:hover) .cursor,
+body:has(button:hover) .cursor { width: 18px; height: 18px; }
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  opacity: .6;
+}
+
+/* ── HEADER ── */
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2.5rem;
+  background: rgba(245,242,236,.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: .04em;
+  color: var(--ink);
+}
+.logo span { color: var(--accent); font-style: italic; }
+.header-nav { display: flex; gap: 2rem; align-items: center; }
+.header-nav a {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--ink3);
+  text-decoration: none;
+  letter-spacing: .08em;
+  transition: color .2s;
+}
+.header-nav a:hover { color: var(--ink); }
+.header-cta {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 8px 18px;
+  border-radius: 3px;
+  text-decoration: none;
+  letter-spacing: .06em;
+  transition: background .2s;
+}
+.header-cta:hover { background: var(--accent); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 7rem 2.5rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -48%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(120px, 22vw, 240px);
+  font-weight: 300;
+  color: rgba(26,23,18,.04);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -.02em;
+  line-height: 1;
+}
+.hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; }
+.hero-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-label::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -.01em;
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+.hero h1 strong {
+  font-weight: 600;
+  font-style: italic;
+}
+.hero-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border2);
+  margin-top: 1rem;
+}
+.hero-desc {
+  font-size: 14.5px;
+  color: var(--ink2);
+  max-width: 460px;
+  line-height: 1.8;
+}
+.hero-stats {
+  display: flex;
+  gap: 2.5rem;
+  flex-shrink: 0;
+}
+.stat-item { text-align: right; }
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ink);
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--ink3);
+  letter-spacing: .06em;
+  margin-top: 4px;
+}
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--ink3);
+  letter-spacing: .1em;
+  animation: bounce 2s ease-in-out infinite;
+}
+.scroll-hint::after {
+  content: '';
+  width: 1px;
+  height: 32px;
+  background: var(--ink3);
+  animation: extend 2s ease-in-out infinite;
+}
+@keyframes bounce { 0%,100%{ transform: translateX(-50%) translateY(0); } 50%{ transform: translateX(-50%) translateY(6px); } }
+@keyframes extend { 0%,100%{ height: 32px; opacity: .5; } 50%{ height: 48px; opacity: 1; } }
+
+/* ── SECTION SHARED ── */
+section { padding: 5rem 2.5rem; position: relative; z-index: 2; }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--ink3);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
+
+/* ── WORKS GRID ── */
+#works { background: var(--ink); color: #F5F2EC; }
+#works .section-label { color: rgba(245,242,236,.3); }
+#works .section-label::after { background: rgba(245,242,236,.1); }
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1px;
+  background: rgba(245,242,236,.08);
+  border: 1px solid rgba(245,242,236,.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.work-card {
+  background: var(--ink);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: background .3s;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+}
+.work-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: translateY(101%);
+  transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+  z-index: 0;
+}
+.work-card:hover::before { transform: translateY(0); }
+.work-card > * { position: relative; z-index: 1; }
+
+/* card sizing */
+.work-card.wide { grid-column: span 7; }
+.work-card.narrow { grid-column: span 5; }
+.work-card.third { grid-column: span 4; }
+.work-card.half { grid-column: span 6; }
+@media (max-width: 900px) {
+  .work-card.wide, .work-card.narrow,
+  .work-card.third, .work-card.half { grid-column: span 12; }
+}
+
+.card-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: rgba(245,242,236,.3);
+  letter-spacing: .1em;
+  margin-bottom: 1.5rem;
+  transition: color .3s;
+}
+.work-card:hover .card-num { color: rgba(245,242,236,.6); }
+
+.card-icon {
+  font-size: 28px;
+  margin-bottom: 1.2rem;
+  display: block;
+}
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #F5F2EC;
+  margin-bottom: .6rem;
+}
+.card-desc {
+  font-size: 12.5px;
+  color: rgba(245,242,236,.45);
+  line-height: 1.65;
+  flex: 1;
+  transition: color .3s;
+}
+.work-card:hover .card-desc { color: rgba(245,242,236,.8); }
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 1.5rem;
+}
+.card-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  padding: 3px 8px;
+  border-radius: 2px;
+  border: 1px solid rgba(245,242,236,.15);
+  color: rgba(245,242,236,.4);
+  letter-spacing: .06em;
+  transition: border-color .3s, color .3s;
+}
+.work-card:hover .card-tag { border-color: rgba(245,242,236,.4); color: rgba(245,242,236,.8); }
+
+.card-arrow {
+  margin-top: 1.5rem;
+  font-size: 20px;
+  color: rgba(245,242,236,.2);
+  transition: color .3s, transform .3s;
+  align-self: flex-end;
+}
+.work-card:hover .card-arrow { color: #F5F2EC; transform: translate(4px, -4px); }
+
+/* ── SKILLS ── */
+#skills { border-top: 1px solid var(--border); }
+.skills-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+@media (max-width: 720px) { .skills-layout { grid-template-columns: 1fr; } }
+.skills-left h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+}
+.skills-left p {
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.8;
+  max-width: 380px;
+}
+.skill-bars { display: flex; flex-direction: column; gap: 1rem; }
+.skill-item { }
+.skill-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 12.5px;
+}
+.skill-name { color: var(--ink); font-weight: 500; }
+.skill-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--ink3);
+}
+.skill-bar {
+  height: 3px;
+  background: var(--border2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.skill-fill {
+  height: 100%;
+  background: var(--ink);
+  border-radius: 2px;
+  transform-origin: left;
+  animation: fillbar 1.2s cubic-bezier(.4,0,.2,1) forwards;
+  transform: scaleX(0);
+}
+@keyframes fillbar { to { transform: scaleX(1); } }
+
+/* ── PROCESS ── */
+#process { background: #F0EDE5; border-top: 1px solid var(--border); }
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.process-step {
+  padding: 2rem 1.5rem;
+  border-right: 1px solid var(--border2);
+  position: relative;
+}
+.process-step:last-child { border-right: none; }
+@media (max-width: 700px) {
+  .process-steps { grid-template-columns: 1fr; }
+  .process-step { border-right: none; border-bottom: 1px solid var(--border2); }
+  .process-step:last-child { border-bottom: none; }
+}
+.step-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 300;
+  color: rgba(26,23,18,.08);
+  line-height: 1;
+  margin-bottom: .75rem;
+}
+.step-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: .5rem;
+}
+.step-desc {
+  font-size: 12.5px;
+  color: var(--ink2);
+  line-height: 1.65;
+}
+.step-tool {
+  margin-top: .85rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: .06em;
+}
+
+/* ── CTA ── */
+#cta {
+  text-align: center;
+  padding: 6rem 2.5rem;
+  border-top: 1px solid var(--border);
+}
+#cta h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+#cta h2 em { font-style: italic; color: var(--accent); }
+#cta p {
+  font-size: 14.5px;
+  color: var(--ink2);
+  margin-bottom: 2.5rem;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 14px 32px;
+  border-radius: 3px;
+  text-decoration: none;
+  letter-spacing: .06em;
+  transition: background .2s;
+  display: inline-block;
+}
+.btn-primary:hover { background: var(--accent); }
+.btn-secondary {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  background: transparent;
+  color: var(--ink);
+  padding: 14px 32px;
+  border-radius: 3px;
+  border: 1px solid var(--border2);
+  text-decoration: none;
+  letter-spacing: .06em;
+  transition: border-color .2s, color .2s;
+  display: inline-block;
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── FOOTER ── */
+footer {
+  padding: 1.5rem 2.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  z-index: 2;
+  position: relative;
+}
+footer p {
+  font-family: 'DM Mono', monospace;
+  font-size: 10.5px;
+  color: var(--ink3);
+  letter-spacing: .06em;
+}
+
+/* ── ANIMATIONS ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* stagger delays */
+.fade-up:nth-child(1) { transition-delay: 0s; }
+.fade-up:nth-child(2) { transition-delay: .1s; }
+.fade-up:nth-child(3) { transition-delay: .2s; }
+.fade-up:nth-child(4) { transition-delay: .3s; }
+.fade-up:nth-child(5) { transition-delay: .4s; }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">AI × <span>行銷</span> 作品集</div>
+  <nav class="header-nav">
+    <a href="#works">作品</a>
+    <a href="#skills">能力</a>
+    <a href="#process">流程</a>
+    <a href="#cta" class="header-cta">聯絡我</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-text">AI × MKT</div>
+  <div class="hero-inner">
+    <div class="hero-label">求職作品集 · 2025</div>
+    <h1>用 <em>AI 工具</em><br>重新定義<br><strong>行銷工作方式</strong></h1>
+    <div class="hero-bottom">
+      <p class="hero-desc">具備跨領域背景，透過系統性學習將 AI 工具整合進行銷工作流程，從內容產製、SEO 優化到行銷自動化，打造可複製的高效工作方法。</p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">5</div>
+          <div class="stat-label">件作品</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">7+</div>
+          <div class="stat-label">AI 工具</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">6</div>
+          <div class="stat-label">自動化流程</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">scroll</div>
+</section>
+
+<!-- WORKS -->
+<section id="works">
+  <div class="section-inner">
+    <div class="section-label">01 — 作品展示</div>
+    <div class="works-grid">
+
+      <!-- Card 1: SEO -->
+      <a class="work-card wide fade-up" href="seo-ai-showcase.html" target="_blank">
+        <div class="card-num">001</div>
+        <span class="card-icon">✦</span>
+        <div class="card-title">SEO 部落格文章<br>AI 優化前後對比</div>
+        <div class="card-desc">以咖啡廳行銷為主題，展示四輪 Prompt 設計思路，將文章 SEO 評分從 42 分提升至 88 分，附完整優化邏輯與八項指標分析。</div>
+        <div class="card-tags">
+          <span class="card-tag">SEO</span>
+          <span class="card-tag">Claude</span>
+          <span class="card-tag">內容行銷</span>
+          <span class="card-tag">Prompt 設計</span>
+        </div>
+        <div class="card-arrow">↗</div>
+      </a>
+
+      <!-- Card 2: Flow -->
+      <a class="work-card narrow fade-up" href="marketing_ai_sop_flowchart.html" target="_blank">
+        <div class="card-num">002</div>
+        <span class="card-icon">◈</span>
+        <div class="card-title">行銷內容產製<br>AI 工作流程 SOP</div>
+        <div class="card-desc">五階段完整流程圖，從策略規劃到發佈追蹤，設計審核退回循環機制，標示工具與角色分工。</div>
+        <div class="card-tags">
+          <span class="card-tag">SOP 設計</span>
+          <span class="card-tag">流程圖</span>
+          <span class="card-tag">工具整合</span>
+        </div>
+        <div class="card-arrow">↗</div>
+      </a>
+
+      <!-- Card 3: Tools -->
+      <a class="work-card third fade-up" href="ai-tools-comparison.html" target="_blank">
+        <div class="card-num">003</div>
+        <span class="card-icon">⊞</span>
+        <div class="card-title">AI 工具比較<br>指南</div>
+        <div class="card-desc">七款主流工具的情境適用性比較，含六種實際任務的工具組合建議。</div>
+        <div class="card-tags">
+          <span class="card-tag">工具評測</span>
+          <span class="card-tag">Midjourney</span>
+          <span class="card-tag">ChatGPT</span>
+        </div>
+        <div class="card-arrow">↗</div>
+      </a>
+
+      <!-- Card 4: Automation -->
+      <a class="work-card third fade-up" href="marketing-automation-guide.html" target="_blank">
+        <div class="card-num">004</div>
+        <span class="card-icon">⟳</span>
+        <div class="card-title">行銷自動化<br>工作流程文件</div>
+        <div class="card-desc">Make 與 Zapier 六大應用場景，含 API 設定邏輯、Prompt 模板與四週導入計畫。</div>
+        <div class="card-tags">
+          <span class="card-tag">Make</span>
+          <span class="card-tag">Zapier</span>
+          <span class="card-tag">自動化</span>
+        </div>
+        <div class="card-arrow">↗</div>
+      </a>
+
+      <!-- Card 5: Interview -->
+      <a class="work-card third fade-up" href="interview-guide.html" target="_blank">
+        <div class="card-num">005</div>
+        <span class="card-icon">◎</span>
+        <div class="card-title">面試準備<br>完整手冊</div>
+        <div class="card-desc">5–7 分鐘自我介紹說稿、12 個高機率問題解析，以及面試當天準備清單。</div>
+        <div class="card-tags">
+          <span class="card-tag">轉職準備</span>
+          <span class="card-tag">AI 行銷</span>
+          <span class="card-tag">Q&A</span>
+        </div>
+        <div class="card-arrow">↗</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-label">02 — 能力概覽</div>
+    <div class="skills-layout">
+      <div class="skills-left fade-up">
+        <h2>AI 工具<br><em>不是趨勢，</em><br>是工作方式</h2>
+        <p>從日常工作中發展出與 AI 協作的習慣，系統性地將工具整合進行銷工作流程，讓創意和策略獲得更多空間。</p>
+      </div>
+      <div class="skill-bars">
+        <div class="skill-item fade-up">
+          <div class="skill-top">
+            <span class="skill-name">AI 文案生成與優化</span>
+            <span class="skill-pct">90%</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="width:90%; animation-delay:.1s;"></div></div>
+        </div>
+        <div class="skill-item fade-up">
+          <div class="skill-top">
+            <span class="skill-name">SEO 內容策略</span>
+            <span class="skill-pct">80%</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="width:80%; animation-delay:.2s;"></div></div>
+        </div>
+        <div class="skill-item fade-up">
+          <div class="skill-top">
+            <span class="skill-name">Prompt 工程設計</span>
+            <span class="skill-pct">85%</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="width:85%; animation-delay:.25s;"></div></div>
+        </div>
+        <div class="skill-item fade-up">
+          <div class="skill-top">
+            <span class="skill-name">行銷自動化流程規劃</span>
+            <span class="skill-pct">75%</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="width:75%; animation-delay:.3s;"></div></div>
+        </div>
+        <div class="skill-item fade-up">
+          <div class="skill-top">
+            <span class="skill-name">AI 圖像生成應用</span>
+            <span class="skill-pct">78%</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="width:78%; animation-delay:.35s;"></div></div>
+        </div>
+        <div class="skill-item fade-up">
+          <div class="skill-top">
+            <span class="skill-name">跨工具工作流程整合</span>
+            <span class="skill-pct">82%</span>
+          </div>
+          <div class="skill-bar"><div class="skill-fill" style="width:82%; animation-delay:.4s;"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-inner">
+    <div class="section-label">03 — 工作方式</div>
+    <div class="process-steps">
+      <div class="process-step fade-up">
+        <div class="step-num">01</div>
+        <div class="step-title">定義目標與受眾</div>
+        <div class="step-desc">在啟動任何 AI 工具之前，先釐清這份內容要對誰說、要達成什麼目的。</div>
+        <div class="step-tool">人工判斷</div>
+      </div>
+      <div class="process-step fade-up">
+        <div class="step-num">02</div>
+        <div class="step-title">設計 Prompt 框架</div>
+        <div class="step-desc">給邊界、拆步驟、指定角色——讓 AI 在明確框架內發揮，而不是漫無目的生成。</div>
+        <div class="step-tool">Claude · ChatGPT</div>
+      </div>
+      <div class="process-step fade-up">
+        <div class="step-num">03</div>
+        <div class="step-title">AI 生成初稿</div>
+        <div class="step-desc">文字交 Claude，圖像交 Midjourney，資料整合交 Make——工具各司其職。</div>
+        <div class="step-tool">AI 執行</div>
+      </div>
+      <div class="process-step fade-up">
+        <div class="step-num">04</div>
+        <div class="step-title">人工審查與優化</div>
+        <div class="step-desc">確認品牌語氣、事實正確性、SEO 指標。AI 提供速度，人提供判斷力。</div>
+        <div class="step-tool">人工把關</div>
+      </div>
+      <div class="process-step fade-up">
+        <div class="step-num">05</div>
+        <div class="step-title">自動化發佈追蹤</div>
+        <div class="step-desc">Make / Zapier 處理排程與通知，GA4 追蹤成效，數據再回饋下一輪優化。</div>
+        <div class="step-tool">Make · Zapier · GA4</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="section-inner">
+    <h2>準備好一起<br><em>重新定義</em>工作了嗎？</h2>
+    <p>歡迎聯絡我討論這份作品集，或直接安排面試。</p>
+    <div class="cta-actions">
+      <a href="mailto:your@email.com" class="btn-primary">寄信給我 →</a>
+      <a href="interview-guide.html" class="btn-secondary" target="_blank">查看面試準備</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>AI 行銷應用作品集 · 2025</p>
+  <p>使用工具：Claude · ChatGPT · Midjourney · Make · Zapier</p>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+function animateRing() {
+  rx += (mx - rx) * .12;
+  ry += (my - ry) * .12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Hero entrance
+setTimeout(() => {
+  document.querySelectorAll('.hero .hero-label, .hero h1, .hero-bottom').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = `opacity .8s ease ${i * .15}s, transform .8s ease ${i * .15}s`;
+    requestAnimationFrame(() => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    });
+  });
+}, 100);
+</script>
+</body>
+</html>

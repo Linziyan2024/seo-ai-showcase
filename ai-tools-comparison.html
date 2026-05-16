@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>行銷 AI 工具比較指南</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #18181B;
+    --ink2: #52525B;
+    --ink3: #A1A1AA;
+    --bg: #FAFAF9;
+    --surface: #FFFFFF;
+    --border: #E4E4E7;
+    --border2: #D4D4D8;
+    --accent: #DC4F2A;
+    --accent2: #F97316;
+    --tag1: #EFF6FF; --tag1t: #1D4ED8;
+    --tag2: #F0FDF4; --tag2t: #15803D;
+    --tag3: #FFF7ED; --tag3t: #C2410C;
+    --tag4: #FAF5FF; --tag4t: #7E22CE;
+    --tag5: #FFF1F2; --tag5t: #BE123C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--ink);
+    padding: 3.5rem 2.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 50%, transparent 100%);
+  }
+  .header-inner { max-width: 960px; margin: 0 auto; }
+  .header-eyebrow {
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    max-width: 640px;
+  }
+  .header-sub {
+    color: rgba(255,255,255,.55);
+    font-size: 14px;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+  .header-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+  .header-pill {
+    font-size: 12px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.15);
+    color: rgba(255,255,255,.6);
+  }
+
+  /* ── LAYOUT ── */
+  .main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 2.5rem 0 1.25rem;
+  }
+  .section-title h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    color: var(--ink);
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .section-num {
+    width: 26px; height: 26px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  /* ── TOOL CARD ── */
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: .5rem;
+  }
+  .tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.4rem;
+    transition: box-shadow .2s, border-color .2s;
+    position: relative;
+  }
+  .tool-card:hover {
+    border-color: var(--border2);
+    box-shadow: 0 4px 20px rgba(0,0,0,.06);
+  }
+  .tool-card.featured {
+    border-color: var(--accent);
+    border-width: 1.5px;
+  }
+  .featured-badge {
+    position: absolute;
+    top: -1px; right: 16px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    padding: 3px 10px;
+    border-radius: 0 0 8px 8px;
+  }
+  .tool-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+  .tool-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .tool-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .tool-maker {
+    font-size: 12px;
+    color: var(--ink3);
+  }
+  .tool-desc {
+    font-size: 13px;
+    color: var(--ink2);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .use-cases {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1rem;
+  }
+  .tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .t1 { background: var(--tag1); color: var(--tag1t); }
+  .t2 { background: var(--tag2); color: var(--tag2t); }
+  .t3 { background: var(--tag3); color: var(--tag3t); }
+  .t4 { background: var(--tag4); color: var(--tag4t); }
+  .t5 { background: var(--tag5); color: var(--tag5t); }
+
+  .tool-strengths {
+    font-size: 12.5px;
+    color: var(--ink2);
+  }
+  .tool-strengths li {
+    list-style: none;
+    padding: 3px 0;
+    padding-left: 16px;
+    position: relative;
+  }
+  .tool-strengths li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #22C55E;
+    font-size: 11px;
+    top: 4px;
+  }
+  .tool-limit {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: #FFF7ED;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #92400E;
+  }
+  .tool-limit::before { content: '⚠ '; }
+
+  /* ── COMPARISON TABLE ── */
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 580px;
+  }
+  thead tr {
+    background: var(--ink);
+    color: #fff;
+  }
+  thead th {
+    padding: .85rem 1rem;
+    font-weight: 500;
+    text-align: left;
+    font-size: 12px;
+    letter-spacing: .04em;
+    white-space: nowrap;
+  }
+  thead th:first-child { border-radius: 13px 0 0 0; }
+  thead th:last-child { border-radius: 0 13px 0 0; }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background .15s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #FAFAF9; }
+  td {
+    padding: .7rem 1rem;
+    vertical-align: middle;
+    color: var(--ink2);
+  }
+  td:first-child { color: var(--ink); font-weight: 500; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+  .dot-green { background: #22C55E; }
+  .dot-yellow { background: #F59E0B; }
+  .dot-gray { background: #D1D5DB; }
+
+  /* ── SCENARIO CARDS ── */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+  .scenario-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem;
+    background: var(--surface);
+  }
+  .scenario-q {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: .75rem;
+    padding-bottom: .75rem;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.5;
+  }
+  .scenario-q::before { content: '💬 '; }
+  .scenario-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .flow-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    color: var(--ink2);
+  }
+  .flow-num {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--border);
+    color: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .flow-tool {
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--ink);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  /* ── TIPS BOX ── */
+  .tips-box {
+    background: var(--ink);
+    color: rgba(255,255,255,.85);
+    border-radius: 14px;
+    padding: 1.75rem;
+    margin-top: 2rem;
+  }
+  .tips-box h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .tip-item {
+    padding: 1rem;
+    background: rgba(255,255,255,.06);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.08);
+  }
+  .tip-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent2);
+    margin-bottom: .4rem;
+  }
+  .tip-body {
+    font-size: 12.5px;
+    color: rgba(255,255,255,.6);
+    line-height: 1.6;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 12px;
+    color: var(--ink3);
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-eyebrow">作品集文件 · 行銷 AI 工具指南</div>
+    <h1>行銷團隊<br><em>AI 工具比較與應用指南</em></h1>
+    <p class="header-sub">整理七款主流 AI 工具的行銷適用情境、使用建議與工具組合策略，協助團隊快速找到最適合的工作夥伴。</p>
+    <div class="header-pills">
+      <span class="header-pill">SEO 文案</span>
+      <span class="header-pill">圖像生成</span>
+      <span class="header-pill">社群行銷</span>
+      <span class="header-pill">自動化流程</span>
+      <span class="header-pill">資料整理</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- SECTION 1: 文案類 -->
+  <div class="section-title">
+    <div class="section-num">1</div>
+    <h2>文案 &amp; 策略工具</h2>
+  </div>
+
+  <div class="tool-grid">
+
+    <div class="tool-card featured">
+      <div class="featured-badge">★ 推薦主力</div>
+      <div class="tool-top">
+        <div class="tool-icon" style="background:#F0F4FF;">🤖</div>
+        <div>
+          <div class="tool-name">Claude</div>
+          <div class="tool-maker">Anthropic</div>
+        </div>
+      </div>
+      <div class="tool-desc">擅長長篇結構性寫作、SEO 文章改寫、品牌語氣維持。對話式 prompt 修訂效率高，適合需要多次反覆調整的內容任務。</div>
+      <div class="use-cases">
+        <span class="tag t1">SEO 部落格</span>
+        <span class="tag t2">文案優化</span>
+        <span class="tag t4">SOP 文件</span>
+        <span class="tag t1">關鍵字策略</span>
+      </div>
+      <ul class="tool-strengths">
+        <li>長文結構邏輯清晰，不容易跑題</li>
+        <li>可要求指定語氣、字數、受眾</li>
+        <li>適合建立可重複使用的 prompt 模板</li>
+      </ul>
+      <div class="tool-limit">免費版有每日限制，重度使用建議升級 Pro</div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-top">
+        <div class="tool-icon" style="background:#FFF8F0;">💬</div>
+        <div>
+          <div class="tool-name">ChatGPT</div>
+          <div class="tool-maker">OpenAI</div>
+        </div>
+      </div>
+      <div class="tool-desc">通用型寫作助理，Plugins 生態豐富。適合快速腦力激盪、短文案發想，以及搭配 GPT-4o 做圖文整合。</div>
+      <div class="use-cases">
+        <span class="tag t3">廣告文案</span>
+        <span class="tag t2">標題腦暴</span>
+        <span class="tag t5">Email 行銷</span>
+      </div>
+      <ul class="tool-strengths">
+        <li>回覆速度快，適合即時靈感發想</li>
+        <li>支援圖片輸入（GPT-4o）</li>
+        <li>Plugin 可串接網路搜尋</li>
+      </ul>
+      <div class="tool-limit">長文一致性不如 Claude，需多次追問確認</div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-top">
+        <div class="tool-icon" style="background:#F0FFF4;">✨</div>
+        <div>
+          <div class="tool-name">Gemini</div>
+          <div class="tool-maker">Google</div>
+        </div>
+      </div>
+      <div class="tool-desc">與 Google Workspace 深度整合，適合直接在 Docs / Sheets 內使用 AI 功能，以及需要即時網路資訊的內容任務。</div>
+      <div class="use-cases">
+        <span class="tag t2">Google Docs</span>
+        <span class="tag t1">市場研究</span>
+        <span class="tag t4">試算表整理</span>
+      </div>
+      <ul class="tool-strengths">
+        <li>直接在 Google Docs 側欄使用</li>
+        <li>可即時搜尋最新資訊</li>
+        <li>適合整合現有 G Suite 工作流</li>
+      </ul>
+      <div class="tool-limit">繁體中文長文品質偶有不穩定情況</div>
+    </div>
+
+  </div>
+
+  <!-- SECTION 2: 圖像類 -->
+  <div class="section-title">
+    <div class="section-num">2</div>
+    <h2>圖像生成工具</h2>
+  </div>
+
+  <div class="tool-grid">
+
+    <div class="tool-card featured">
+      <div class="featured-badge">★ 品質首選</div>
+      <div class="tool-top">
+        <div class="tool-icon" style="background:#F5F0FF;">🎨</div>
+        <div>
+          <div class="tool-name">Midjourney</div>
+          <div class="tool-maker">Midjourney Inc.</div>
+        </div>
+      </div>
+      <div class="tool-desc">目前市場上視覺品質最高的 AI 圖像工具，特別適合需要高質感氛圍圖、品牌視覺、海報背景的行銷素材。</div>
+      <div class="use-cases">
+        <span class="tag t4">品牌視覺</span>
+        <span class="tag t3">海報背景</span>
+        <span class="tag t5">活動 KV</span>
+        <span class="tag t1">社群封面</span>
+      </div>
+      <ul class="tool-strengths">
+        <li>美感一致性最高，產出即可用</li>
+        <li>風格參數豐富（–style、–ar）</li>
+        <li>v6 版本人像與文字渲染大幅提升</li>
+      </ul>
+      <div class="tool-limit">需透過 Discord 操作，無法直接生成含準確中文的圖片</div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-top">
+        <div class="tool-icon" style="background:#FFF9F0;">🖼️</div>
+        <div>
+          <div class="tool-name">DALL·E 3</div>
+          <div class="tool-maker">OpenAI（內建 ChatGPT）</div>
+        </div>
+      </div>
+      <div class="tool-desc">與 ChatGPT 直接整合，可用自然語言描述生成圖像，適合快速製作示意圖、簡報配圖，不需要額外學習 prompt 語法。</div>
+      <div class="use-cases">
+        <span class="tag t2">簡報配圖</span>
+        <span class="tag t1">概念示意</span>
+        <span class="tag t3">DM 插圖</span>
+      </div>
+      <ul class="tool-strengths">
+        <li>自然語言描述即可，操作門檻低</li>
+        <li>支援文字正確渲染</li>
+        <li>ChatGPT Plus 內含，無需額外訂閱</li>
+      </ul>
+      <div class="tool-limit">精細風格控制能力不如 Midjourney</div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-top">
+        <div class="tool-icon" style="background:#F0F8FF;">⚡</div>
+        <div>
+          <div class="tool-name">Adobe Firefly</div>
+          <div class="tool-maker">Adobe</div>
+        </div>
+      </div>
+      <div class="tool-desc">Adobe 生態系整合，可直接在 Photoshop / Express 中使用 AI 填充、生成擴展。適合需要版權安全圖像的商業用途。</div>
+      <div class="use-cases">
+        <span class="tag t2">商業素材</span>
+        <span class="tag t4">Photoshop 整合</span>
+        <span class="tag t1">版權安全</span>
+      </div>
+      <ul class="tool-strengths">
+        <li>商業授權無版權疑慮</li>
+        <li>直接在 PS 中 AI 填充修圖</li>
+        <li>Adobe CC 訂閱者免費使用</li>
+      </ul>
+      <div class="tool-limit">生成風格較保守，創意發揮有限</div>
+    </div>
+
+  </div>
+
+  <!-- SECTION 3: 比較表 -->
+  <div class="section-title">
+    <div class="section-num">3</div>
+    <h2>行銷任務適用性比較</h2>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>AI 工具</th>
+          <th>SEO 長文</th>
+          <th>短文案</th>
+          <th>圖像生成</th>
+          <th>資料整理</th>
+          <th>自動化串接</th>
+          <th>建議月費</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Claude</td>
+          <td><span class="dot dot-green"></span>最佳</td>
+          <td><span class="dot dot-green"></span>良好</td>
+          <td><span class="dot dot-gray"></span>不支援</td>
+          <td><span class="dot dot-green"></span>良好</td>
+          <td><span class="dot dot-yellow"></span>API 可用</td>
+          <td>免費 / US$20</td>
+        </tr>
+        <tr>
+          <td>ChatGPT</td>
+          <td><span class="dot dot-yellow"></span>良好</td>
+          <td><span class="dot dot-green"></span>最佳</td>
+          <td><span class="dot dot-yellow"></span>DALL·E 3</td>
+          <td><span class="dot dot-yellow"></span>普通</td>
+          <td><span class="dot dot-green"></span>Plugin 豐富</td>
+          <td>免費 / US$20</td>
+        </tr>
+        <tr>
+          <td>Gemini</td>
+          <td><span class="dot dot-yellow"></span>普通</td>
+          <td><span class="dot dot-yellow"></span>良好</td>
+          <td><span class="dot dot-yellow"></span>Imagen</td>
+          <td><span class="dot dot-green"></span>Sheets 整合</td>
+          <td><span class="dot dot-green"></span>G Suite 原生</td>
+          <td>免費 / US$20</td>
+        </tr>
+        <tr>
+          <td>Midjourney</td>
+          <td><span class="dot dot-gray"></span>不支援</td>
+          <td><span class="dot dot-gray"></span>不支援</td>
+          <td><span class="dot dot-green"></span>最佳品質</td>
+          <td><span class="dot dot-gray"></span>不支援</td>
+          <td><span class="dot dot-gray"></span>有限 API</td>
+          <td>US$10–60</td>
+        </tr>
+        <tr>
+          <td>DALL·E 3</td>
+          <td><span class="dot dot-gray"></span>不支援</td>
+          <td><span class="dot dot-gray"></span>不支援</td>
+          <td><span class="dot dot-yellow"></span>良好</td>
+          <td><span class="dot dot-gray"></span>不支援</td>
+          <td><span class="dot dot-yellow"></span>API 可用</td>
+          <td>含 GPT Plus</td>
+        </tr>
+        <tr>
+          <td>Adobe Firefly</td>
+          <td><span class="dot dot-gray"></span>不支援</td>
+          <td><span class="dot dot-gray"></span>不支援</td>
+          <td><span class="dot dot-yellow"></span>商業安全</td>
+          <td><span class="dot dot-gray"></span>不支援</td>
+          <td><span class="dot dot-green"></span>Adobe CC</td>
+          <td>含 Adobe CC</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 4: 情境建議 -->
+  <div class="section-title">
+    <div class="section-num">4</div>
+    <h2>常見任務工具組合建議</h2>
+  </div>
+
+  <div class="scenario-grid">
+    <div class="scenario-card">
+      <div class="scenario-q">要快速產出一篇 IG 活動貼文</div>
+      <div class="scenario-flow">
+        <div class="flow-step"><div class="flow-num">1</div>標題和文案發想 <span class="flow-tool">ChatGPT</span></div>
+        <div class="flow-step"><div class="flow-num">2</div>語氣優化 &amp; 加 hashtag <span class="flow-tool">Claude</span></div>
+        <div class="flow-step"><div class="flow-num">3</div>活動氛圍圖生成 <span class="flow-tool">Midjourney</span></div>
+        <div class="flow-step"><div class="flow-num">4</div>圖文排版合成 <span class="flow-tool">Canva</span></div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div class="scenario-q">撰寫一篇 SEO 部落格文章</div>
+      <div class="scenario-flow">
+        <div class="flow-step"><div class="flow-num">1</div>關鍵字分析 <span class="flow-tool">Claude</span></div>
+        <div class="flow-step"><div class="flow-num">2</div>文章架構規劃 <span class="flow-tool">Claude</span></div>
+        <div class="flow-step"><div class="flow-num">3</div>初稿撰寫 <span class="flow-tool">Claude</span></div>
+        <div class="flow-step"><div class="flow-num">4</div>人工潤稿 + 發佈 <span class="flow-tool">人工</span></div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div class="scenario-q">製作一份品牌活動 KV 海報</div>
+      <div class="scenario-flow">
+        <div class="flow-step"><div class="flow-num">1</div>海報文案草稿 <span class="flow-tool">Claude</span></div>
+        <div class="flow-step"><div class="flow-num">2</div>視覺概念 prompt <span class="flow-tool">ChatGPT</span></div>
+        <div class="flow-step"><div class="flow-num">3</div>背景圖生成 <span class="flow-tool">Midjourney</span></div>
+        <div class="flow-step"><div class="flow-num">4</div>文字排版設計 <span class="flow-tool">Adobe</span></div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div class="scenario-q">整理競品分析報告</div>
+      <div class="scenario-flow">
+        <div class="flow-step"><div class="flow-num">1</div>資料蒐集與彙整 <span class="flow-tool">Gemini</span></div>
+        <div class="flow-step"><div class="flow-num">2</div>表格整理與分析 <span class="flow-tool">Gemini Sheets</span></div>
+        <div class="flow-step"><div class="flow-num">3</div>報告文字撰寫 <span class="flow-tool">Claude</span></div>
+        <div class="flow-step"><div class="flow-num">4</div>簡報製作 <span class="flow-tool">ChatGPT</span></div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div class="scenario-q">每週社群內容排程自動化</div>
+      <div class="scenario-flow">
+        <div class="flow-step"><div class="flow-num">1</div>月曆內容規劃 <span class="flow-tool">Claude</span></div>
+        <div class="flow-step"><div class="flow-num">2</div>批量文案生成 <span class="flow-tool">ChatGPT API</span></div>
+        <div class="flow-step"><div class="flow-num">3</div>自動化審核流程 <span class="flow-tool">Make.com</span></div>
+        <div class="flow-step"><div class="flow-num">4</div>排程發佈 <span class="flow-tool">Buffer</span></div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div class="scenario-q">設計 EDM 電子報</div>
+      <div class="scenario-flow">
+        <div class="flow-step"><div class="flow-num">1</div>主題與架構規劃 <span class="flow-tool">Claude</span></div>
+        <div class="flow-step"><div class="flow-num">2</div>各段落文案撰寫 <span class="flow-tool">Claude</span></div>
+        <div class="flow-step"><div class="flow-num">3</div>配圖生成 <span class="flow-tool">DALL·E 3</span></div>
+        <div class="flow-step"><div class="flow-num">4</div>版型排版 <span class="flow-tool">Mailchimp</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="tips-box">
+    <h3>🧭 新手導入 AI 工具的四個原則</h3>
+    <div class="tips-grid">
+      <div class="tip-item">
+        <div class="tip-title">先從一個工具上手</div>
+        <div class="tip-body">建議從 Claude 或 ChatGPT 其中一個熟練，再逐步擴展工具組合，避免工具切換的認知負擔。</div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-title">建立 Prompt 資料庫</div>
+        <div class="tip-body">把有效的 prompt 整理到 Notion，讓整個團隊都能複用。好的 prompt 是可以共享的資產。</div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-title">AI 產出 ≠ 最終稿</div>
+        <div class="tip-body">所有 AI 產出都需要人工確認品牌語氣、數據正確性與法規合規，AI 是助手不是終點。</div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-title">量化改善成效</div>
+        <div class="tip-body">追蹤導入 AI 工具前後的內容產製時間、SEO 排名、互動率，讓數據說話並持續優化流程。</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  行銷 AI 工具比較指南 · 作品集文件 · 資料以 2025 年市場狀況為基礎整理
+</div>
+
+</body>
+</html>

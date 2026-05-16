@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>行銷自動化工作流程文件</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0E0F11;
+  --surface: #16181C;
+  --surface2: #1E2026;
+  --border: rgba(255,255,255,.08);
+  --border2: rgba(255,255,255,.13);
+  --ink: #F0EEE8;
+  --ink2: #9A9896;
+  --ink3: #5C5A58;
+  --accent: #E8C547;
+  --accent2: #F0924A;
+  --teal: #4ECDC4;
+  --blue: #6B9FED;
+  --green: #5DBF7A;
+  --red: #E5645A;
+  --make-color: #6B4FBB;
+  --zapier-color: #E05C2A;
+  --make-bg: rgba(107,79,187,.15);
+  --zapier-bg: rgba(224,92,42,.15);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 4rem 2rem 3rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 360px; height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,197,71,.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-inner { max-width: 900px; margin: 0 auto; }
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  border: 1px solid rgba(232,197,71,.3);
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  letter-spacing: .04em;
+}
+.hero-tag::before { content: '▶'; font-size: 8px; }
+.hero h1 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 1rem;
+  max-width: 680px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+.hero-desc {
+  font-size: 14.5px;
+  color: var(--ink2);
+  max-width: 540px;
+  line-height: 1.75;
+  margin-bottom: 2rem;
+}
+.hero-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border2);
+  color: var(--ink2);
+}
+
+/* ── NAV ── */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(14,15,17,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 0;
+  padding: 0 2rem;
+  overflow-x: auto;
+}
+.nav-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  color: var(--ink3);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: .85rem 1.1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .2s, border-color .2s;
+  letter-spacing: .03em;
+}
+.nav-btn:hover { color: var(--ink2); }
+.nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── PANELS ── */
+.panel { display: none; }
+.panel.active { display: block; }
+.inner { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+
+/* ── SECTION HEADS ── */
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+.sec-head h2 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.25rem;
+  color: var(--ink);
+}
+.sec-head::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.sec-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  border: 1px solid rgba(232,197,71,.3);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+/* ── TOOL COMPARE ── */
+.tool-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+@media (max-width: 600px) { .tool-compare { grid-template-columns: 1fr; } }
+.tool-card {
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.tool-card.make { border-color: rgba(107,79,187,.4); }
+.tool-card.zapier { border-color: rgba(224,92,42,.4); }
+.tool-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.tool-card.make::before { background: var(--make-color); }
+.tool-card.zapier::before { background: var(--zapier-color); }
+.tool-logo {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: .75rem;
+}
+.tool-card.make .tool-logo { color: #9B7FE8; }
+.tool-card.zapier .tool-logo { color: #F0824A; }
+.tool-tagline {
+  font-size: 13px;
+  color: var(--ink2);
+  margin-bottom: 1.2rem;
+  line-height: 1.6;
+}
+.tool-specs { display: flex; flex-direction: column; gap: 8px; }
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12.5px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.spec-row:last-child { border-bottom: none; padding-bottom: 0; }
+.spec-label { color: var(--ink3); }
+.spec-val { color: var(--ink); font-weight: 500; }
+.badge-make { background: var(--make-bg); color: #9B7FE8; font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+.badge-zapier { background: var(--zapier-bg); color: #F0824A; font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+.badge-both { background: rgba(94,191,122,.12); color: var(--green); font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+
+/* ── WORKFLOW CARDS ── */
+.workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+@media (max-width:500px) { .workflow-grid { grid-template-columns: 1fr; } }
+
+.wf-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color .2s, transform .2s;
+}
+.wf-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+}
+.wf-header {
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.wf-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.wf-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+.wf-subtitle { font-size: 12px; color: var(--ink3); }
+.wf-tool-badge {
+  margin-left: auto;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.wf-body { padding: 1.1rem 1.25rem; }
+.wf-desc {
+  font-size: 13px;
+  color: var(--ink2);
+  margin-bottom: 1rem;
+  line-height: 1.65;
+}
+
+/* flow steps */
+.flow-steps { display: flex; flex-direction: column; gap: 0; }
+.flow-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+}
+.flow-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 13px;
+  top: 28px;
+  bottom: -10px;
+  width: 1px;
+  background: var(--border);
+}
+.flow-dot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--ink3);
+  flex-shrink: 0;
+  background: var(--surface2);
+  z-index: 1;
+}
+.flow-content {
+  padding: .25rem 0 .9rem;
+  flex: 1;
+}
+.flow-step-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+.flow-step-desc { font-size: 12px; color: var(--ink3); line-height: 1.55; }
+.flow-app {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  margin-top: 4px;
+  padding: 1px 7px;
+  border-radius: 3px;
+  border: 1px solid var(--border2);
+  color: var(--ink2);
+}
+
+.wf-footer {
+  padding: .75rem 1.25rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.wf-saving {
+  font-size: 12px;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.wf-saving::before { content: '↑'; font-size: 14px; }
+.wf-difficulty {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+.diff-1 { background: rgba(94,191,122,.12); color: var(--green); border: 1px solid rgba(94,191,122,.2); }
+.diff-2 { background: rgba(232,197,71,.1); color: var(--accent); border: 1px solid rgba(232,197,71,.2); }
+.diff-3 { background: rgba(229,100,90,.1); color: var(--red); border: 1px solid rgba(229,100,90,.2); }
+
+/* ── PROMPT SECTION ── */
+.prompt-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+.prompt-head {
+  padding: .7rem 1.1rem;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.prompt-head .dots { display: flex; gap: 5px; }
+.prompt-head .dot { width: 10px; height: 10px; border-radius: 50%; }
+.prompt-head .label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--ink3);
+  margin-left: 4px;
+}
+.prompt-head .tool-pill {
+  margin-left: auto;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--make-bg);
+  color: #9B7FE8;
+}
+.prompt-head .tool-pill.z { background: var(--zapier-bg); color: #F0824A; }
+.prompt-body {
+  padding: 1.1rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: var(--ink2);
+  white-space: pre-wrap;
+  border-bottom: 1px solid var(--border);
+}
+.prompt-body .kw { color: var(--teal); }
+.prompt-body .val { color: var(--accent); }
+.prompt-body .cmt { color: var(--ink3); font-style: italic; }
+.prompt-note {
+  padding: .65rem 1.1rem;
+  font-size: 12px;
+  color: var(--ink3);
+  display: flex;
+  gap: 6px;
+}
+.prompt-note::before { content: '//'; font-family: 'IBM Plex Mono', monospace; color: var(--ink3); }
+
+/* ── CHECKLIST ── */
+.checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.checklist-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.2rem;
+}
+.checklist-card h3 {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: .85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.check-item {
+  display: flex;
+  gap: 8px;
+  padding: .45rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--ink2);
+  align-items: flex-start;
+  line-height: 1.55;
+}
+.check-item:last-child { border-bottom: none; }
+.check-item::before {
+  content: '○';
+  color: var(--ink3);
+  flex-shrink: 0;
+  font-size: 12px;
+  margin-top: 1px;
+}
+
+/* ── PORTFOLIO NOTE ── */
+.portfolio-note {
+  background: var(--surface);
+  border: 1px solid rgba(232,197,71,.25);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+.portfolio-note h3 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1rem;
+  color: var(--accent);
+  margin-bottom: .75rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.portfolio-note p {
+  font-size: 13.5px;
+  color: var(--ink2);
+  line-height: 1.75;
+}
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--border); margin: 2.5rem 0; }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">作品集文件 · 行銷自動化</div>
+    <h1>行銷自動化<br><em>工作流程說明文件</em></h1>
+    <p class="hero-desc">整理 Make 與 Zapier 在行銷工作中的核心應用場景，包含完整流程說明、設定邏輯與 Prompt 範本，可直接作為團隊內部 SOP 使用。</p>
+    <div class="hero-pills">
+      <span class="pill">Make.com</span>
+      <span class="pill">Zapier</span>
+      <span class="pill">社群發佈自動化</span>
+      <span class="pill">潛在客戶管理</span>
+      <span class="pill">內容排程</span>
+      <span class="pill">數據回報</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="switchTab('overview', this)">工具比較</button>
+  <button class="nav-btn" onclick="switchTab('workflows', this)">六大工作流程</button>
+  <button class="nav-btn" onclick="switchTab('prompts', this)">設定邏輯說明</button>
+  <button class="nav-btn" onclick="switchTab('checklist', this)">導入檢查清單</button>
+</nav>
+
+<!-- ══════ PANEL 1: OVERVIEW ══════ -->
+<div id="panel-overview" class="panel active">
+<div class="inner">
+
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <h2>Make vs Zapier 工具定位</h2>
+  </div>
+
+  <div class="tool-compare">
+    <div class="tool-card make">
+      <div class="tool-logo">Make</div>
+      <div class="tool-tagline">視覺化流程設計，適合複雜的多步驟自動化。強項在於資料轉換與條件分支，操作學習曲線略高。</div>
+      <div class="tool-specs">
+        <div class="spec-row"><span class="spec-label">適合對象</span><span class="spec-val">有邏輯思維的行銷人員</span></div>
+        <div class="spec-row"><span class="spec-label">免費方案</span><span class="spec-val">1,000 次操作 / 月</span></div>
+        <div class="spec-row"><span class="spec-label">強項</span><span class="spec-val">複雜流程、資料處理</span></div>
+        <div class="spec-row"><span class="spec-label">介面</span><span class="badge-make">視覺化拖拉</span></div>
+        <div class="spec-row"><span class="spec-label">行銷最適場景</span><span class="spec-val">內容自動分發、CRM 整合</span></div>
+      </div>
+    </div>
+    <div class="tool-card zapier">
+      <div class="tool-logo">Zapier</div>
+      <div class="tool-tagline">業界整合最廣（7,000+ 應用），設定簡單直覺。適合快速串接常用工具，不需要複雜邏輯的任務。</div>
+      <div class="tool-specs">
+        <div class="spec-row"><span class="spec-label">適合對象</span><span class="spec-val">任何行銷人員，門檻最低</span></div>
+        <div class="spec-row"><span class="spec-label">免費方案</span><span class="spec-val">100 次任務 / 月</span></div>
+        <div class="spec-row"><span class="spec-label">強項</span><span class="spec-val">快速整合、工具數量多</span></div>
+        <div class="spec-row"><span class="spec-label">介面</span><span class="badge-zapier">線性步驟設定</span></div>
+        <div class="spec-row"><span class="spec-label">行銷最適場景</span><span class="spec-val">表單通知、社群同步發佈</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-head" style="margin-top:2rem;">
+    <span class="sec-num">02</span>
+    <h2>選擇工具的判斷標準</h2>
+  </div>
+
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:2rem;">
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; border-bottom:1px solid var(--border);">
+      <div style="padding:.7rem 1.1rem; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink3);">情境</div>
+      <div style="padding:.7rem 1.1rem; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#9B7FE8; border-left:1px solid var(--border);">建議 Make</div>
+      <div style="padding:.7rem 1.1rem; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#F0824A; border-left:1px solid var(--border);">建議 Zapier</div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; border-bottom:1px solid var(--border);">
+      <div style="padding:.75rem 1.1rem; font-size:13px; color:var(--ink2);">流程複雜度</div>
+      <div style="padding:.75rem 1.1rem; font-size:13px; color:var(--ink); border-left:1px solid var(--border);">多個條件分支、資料轉換</div>
+      <div style="padding:.75rem 1.1rem; font-size:13px; color:var(--ink); border-left:1px solid var(--border);">3 步驟以內的線性流程</div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; border-bottom:1px solid var(--border);">
+      <div style="padding:.75rem 1.1rem; font-size:13px; color:var(--ink2);">需要的工具</div>
+      <div style="padding:.75rem 1.1rem; font-size:13px; color:var(--ink); border-left:1px solid var(--border);">Airtable、自訂 webhook</div>
+      <div style="padding:.75rem 1.1rem; font-size:13px; color:var(--ink); border-left:1px solid var(--border);">Gmail、Slack、Google Sheets</div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; border-bottom:1px solid var(--border);">
+      <div style="padding:.75rem 1.1rem; font-size:13px; color:var(--ink2);">執行頻率</div>
+      <div style="padding:.75rem 1.1rem; font-size:13px; color:var(--ink); border-left:1px solid var(--border);">高頻（節省 API 次數）</div>
+      <div style="padding:.75rem 1.1rem; font-size:13px; color:var(--ink); border-left:1px solid var(--border);">低頻或事件觸發</div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr;">
+      <div style="padding:.75rem 1.1rem; font-size:13px; color:var(--ink2);">團隊技術能力</div>
+      <div style="padding:.75rem 1.1rem; font-size:13px; color:var(--ink); border-left:1px solid var(--border);">可接受 1–2 天學習成本</div>
+      <div style="padding:.75rem 1.1rem; font-size:13px; color:var(--ink); border-left:1px solid var(--border);">希望 30 分鐘內上手</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════ PANEL 2: WORKFLOWS ══════ -->
+<div id="panel-workflows" class="panel">
+<div class="inner">
+
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <h2>六大行銷自動化工作流程</h2>
+  </div>
+
+  <div class="workflow-grid">
+
+    <!-- WF 1 -->
+    <div class="wf-card">
+      <div class="wf-header">
+        <div class="wf-icon" style="background:rgba(107,79,187,.15);">📣</div>
+        <div>
+          <div class="wf-title">社群貼文跨平台同步發佈</div>
+          <div class="wf-subtitle">Trigger：Google Sheets 新增一列</div>
+        </div>
+        <span class="wf-tool-badge badge-make">Make</span>
+      </div>
+      <div class="wf-body">
+        <div class="wf-desc">行銷人員在 Google Sheets 填入貼文內容、發佈時間與目標平台，系統自動將內容推送到 IG、Facebook、LinkedIn，無需逐一登入後台。</div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-dot">1</div>
+            <div class="flow-content">
+              <div class="flow-step-title">觸發：試算表新增列</div>
+              <div class="flow-step-desc">監控 Google Sheets，偵測「狀態」欄標記為「待發佈」</div>
+              <span class="flow-app">Google Sheets</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">2</div>
+            <div class="flow-content">
+              <div class="flow-step-title">條件判斷：目標平台</div>
+              <div class="flow-step-desc">讀取「平台」欄位，分流至不同發佈路徑</div>
+              <span class="flow-app">Make Router</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">3</div>
+            <div class="flow-content">
+              <div class="flow-step-title">執行：同步發佈內容</div>
+              <div class="flow-step-desc">依平台格式調整文字長度，附上對應的 hashtag 組合</div>
+              <span class="flow-app">Buffer API</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">4</div>
+            <div class="flow-content">
+              <div class="flow-step-title">回寫：更新發佈狀態</div>
+              <div class="flow-step-desc">將「狀態」欄更新為「已發佈」，記錄時間戳</div>
+              <span class="flow-app">Google Sheets</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wf-footer">
+        <div class="wf-saving">省去 3–5 個平台手動操作</div>
+        <span class="wf-difficulty diff-2">中等難度</span>
+      </div>
+    </div>
+
+    <!-- WF 2 -->
+    <div class="wf-card">
+      <div class="wf-header">
+        <div class="wf-icon" style="background:rgba(224,92,42,.15);">📩</div>
+        <div>
+          <div class="wf-title">表單填寫 → 自動 Email 跟進</div>
+          <div class="wf-subtitle">Trigger：表單送出</div>
+        </div>
+        <span class="wf-tool-badge badge-zapier">Zapier</span>
+      </div>
+      <div class="wf-body">
+        <div class="wf-desc">訪客填寫詢問表單後，系統自動發送個人化歡迎信、將聯絡資料同步到 CRM，並通知業務人員，全程不需人工介入。</div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-dot">1</div>
+            <div class="flow-content">
+              <div class="flow-step-title">觸發：表單新提交</div>
+              <div class="flow-step-desc">偵測 Typeform 或 Google Forms 有新填寫</div>
+              <span class="flow-app">Typeform</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">2</div>
+            <div class="flow-content">
+              <div class="flow-step-title">寄送歡迎信</div>
+              <div class="flow-step-desc">使用模板寄出個人化 Email，帶入填寫者姓名</div>
+              <span class="flow-app">Gmail / Mailchimp</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">3</div>
+            <div class="flow-content">
+              <div class="flow-step-title">建立 CRM 聯絡人</div>
+              <div class="flow-step-desc">在 HubSpot 或 Notion 資料庫建立新聯絡人紀錄</div>
+              <span class="flow-app">HubSpot</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">4</div>
+            <div class="flow-content">
+              <div class="flow-step-title">通知業務</div>
+              <div class="flow-step-desc">在 Slack 指定頻道發送新詢問通知</div>
+              <span class="flow-app">Slack</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wf-footer">
+        <div class="wf-saving">回應速度從數小時→即時</div>
+        <span class="wf-difficulty diff-1">入門</span>
+      </div>
+    </div>
+
+    <!-- WF 3 -->
+    <div class="wf-card">
+      <div class="wf-header">
+        <div class="wf-icon" style="background:rgba(78,205,196,.12);">📊</div>
+        <div>
+          <div class="wf-title">週報自動彙整與發送</div>
+          <div class="wf-subtitle">Trigger：每週一 09:00</div>
+        </div>
+        <span class="wf-tool-badge badge-make">Make</span>
+      </div>
+      <div class="wf-body">
+        <div class="wf-desc">每週自動從 GA4、Instagram Insights 抓取數據，彙整成週報格式，發送給行銷主管，省去人工整理時間。</div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-dot">1</div>
+            <div class="flow-content">
+              <div class="flow-step-title">定時觸發</div>
+              <div class="flow-step-desc">每週一早上 9 點自動執行</div>
+              <span class="flow-app">Make Scheduler</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">2</div>
+            <div class="flow-content">
+              <div class="flow-step-title">抓取 GA4 數據</div>
+              <div class="flow-step-desc">拉取上週網站流量、轉換率、熱門頁面</div>
+              <span class="flow-app">GA4 API</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">3</div>
+            <div class="flow-content">
+              <div class="flow-step-title">整合社群數據</div>
+              <div class="flow-step-desc">抓取 IG 觸及率、互動數、粉絲增減</div>
+              <span class="flow-app">Meta Graph API</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">4</div>
+            <div class="flow-content">
+              <div class="flow-step-title">AI 生成摘要 + 發送</div>
+              <div class="flow-step-desc">用 Claude API 生成文字摘要，透過 Email 發送</div>
+              <span class="flow-app">Claude API → Gmail</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wf-footer">
+        <div class="wf-saving">每週節省 2–3 小時整理時間</div>
+        <span class="wf-difficulty diff-3">進階</span>
+      </div>
+    </div>
+
+    <!-- WF 4 -->
+    <div class="wf-card">
+      <div class="wf-header">
+        <div class="wf-icon" style="background:rgba(107,159,237,.12);">🔔</div>
+        <div>
+          <div class="wf-title">品牌監測 → Slack 即時通知</div>
+          <div class="wf-subtitle">Trigger：關鍵字被提及</div>
+        </div>
+        <span class="wf-tool-badge badge-zapier">Zapier</span>
+      </div>
+      <div class="wf-body">
+        <div class="wf-desc">當品牌名稱或指定關鍵字在網路上被提及，立即通知行銷團隊，讓危機處理與口碑管理做到即時反應。</div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-dot">1</div>
+            <div class="flow-content">
+              <div class="flow-step-title">監測關鍵字提及</div>
+              <div class="flow-step-desc">Google Alerts 或 Mention.com 偵測品牌名稱</div>
+              <span class="flow-app">Google Alerts</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">2</div>
+            <div class="flow-content">
+              <div class="flow-step-title">情緒分類過濾</div>
+              <div class="flow-step-desc">透過 Filter 只推送負面或高互動的提及</div>
+              <span class="flow-app">Zapier Filter</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">3</div>
+            <div class="flow-content">
+              <div class="flow-step-title">通知行銷團隊</div>
+              <div class="flow-step-desc">在 Slack 頻道發送原文連結與摘要</div>
+              <span class="flow-app">Slack</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wf-footer">
+        <div class="wf-saving">口碑反應從延遲→即時</div>
+        <span class="wf-difficulty diff-1">入門</span>
+      </div>
+    </div>
+
+    <!-- WF 5 -->
+    <div class="wf-card">
+      <div class="wf-header">
+        <div class="wf-icon" style="background:rgba(93,191,122,.12);">✍️</div>
+        <div>
+          <div class="wf-title">AI 輔助內容批量產製流水線</div>
+          <div class="wf-subtitle">Trigger：Airtable 新增主題</div>
+        </div>
+        <span class="wf-tool-badge badge-make">Make</span>
+      </div>
+      <div class="wf-body">
+        <div class="wf-desc">行銷人員在 Airtable 填入文章主題和關鍵字，系統自動呼叫 Claude API 生成 SEO 初稿，存回資料庫並通知編輯審稿。</div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-dot">1</div>
+            <div class="flow-content">
+              <div class="flow-step-title">觸發：主題新增</div>
+              <div class="flow-step-desc">Airtable 新增一筆「狀態：待生成」的主題紀錄</div>
+              <span class="flow-app">Airtable</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">2</div>
+            <div class="flow-content">
+              <div class="flow-step-title">呼叫 Claude API</div>
+              <div class="flow-step-desc">帶入主題、關鍵字、字數要求，生成 SEO 初稿</div>
+              <span class="flow-app">Claude API</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">3</div>
+            <div class="flow-content">
+              <div class="flow-step-title">存回 Airtable</div>
+              <div class="flow-step-desc">將初稿寫入 Airtable，狀態更新為「待審稿」</div>
+              <span class="flow-app">Airtable</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">4</div>
+            <div class="flow-content">
+              <div class="flow-step-title">通知編輯審稿</div>
+              <div class="flow-step-desc">發送 Slack 通知，附 Airtable 直達連結</div>
+              <span class="flow-app">Slack</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wf-footer">
+        <div class="wf-saving">初稿產製從 2 小時→5 分鐘</div>
+        <span class="wf-difficulty diff-3">進階</span>
+      </div>
+    </div>
+
+    <!-- WF 6 -->
+    <div class="wf-card">
+      <div class="wf-header">
+        <div class="wf-icon" style="background:rgba(232,197,71,.1);">🛒</div>
+        <div>
+          <div class="wf-title">電商訂單 → 行銷再行銷觸發</div>
+          <div class="wf-subtitle">Trigger：新訂單成立</div>
+        </div>
+        <span class="wf-tool-badge badge-zapier">Zapier</span>
+      </div>
+      <div class="wf-body">
+        <div class="wf-desc">客戶完成購買後，自動加入對應的 Email 序列、標記 CRM 標籤，並在 7 天後觸發回購提醒，實現購後自動化行銷。</div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-dot">1</div>
+            <div class="flow-content">
+              <div class="flow-step-title">觸發：訂單完成</div>
+              <div class="flow-step-desc">Shopify 或 WooCommerce 新訂單成立</div>
+              <span class="flow-app">Shopify</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">2</div>
+            <div class="flow-content">
+              <div class="flow-step-title">更新 CRM 標籤</div>
+              <div class="flow-step-desc">在 HubSpot 標記購買品項與客戶分群</div>
+              <span class="flow-app">HubSpot</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">3</div>
+            <div class="flow-content">
+              <div class="flow-step-title">加入 Email 序列</div>
+              <div class="flow-step-desc">依購買品項加入對應的感謝 + 交叉銷售序列</div>
+              <span class="flow-app">Mailchimp</span>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-dot">4</div>
+            <div class="flow-content">
+              <div class="flow-step-title">延遲 7 天再觸發</div>
+              <div class="flow-step-desc">發送回購提醒或評價邀請</div>
+              <span class="flow-app">Zapier Delay → Gmail</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wf-footer">
+        <div class="wf-saving">提升回購率，零人工成本</div>
+        <span class="wf-difficulty diff-2">中等難度</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ══════ PANEL 3: PROMPTS ══════ -->
+<div id="panel-prompts" class="panel">
+<div class="inner">
+
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <h2>關鍵設定邏輯說明</h2>
+  </div>
+
+  <!-- prompt 1 -->
+  <div style="margin-bottom:.5rem; font-size:13px; color:var(--ink2); font-weight:500;">流程 5 · AI 內容批量產製——Claude API 呼叫設定</div>
+  <div class="prompt-box">
+    <div class="prompt-head">
+      <div class="dots"><div class="dot" style="background:#E5645A;"></div><div class="dot" style="background:#E8C547;"></div><div class="dot" style="background:#5DBF7A;"></div></div>
+      <span class="label">Make → HTTP Module → Claude API</span>
+      <span class="tool-pill">Make</span>
+    </div>
+    <div class="prompt-body"><span class="cmt">// HTTP Request 設定</span>
+<span class="kw">URL</span>: <span class="val">https://api.anthropic.com/v1/messages</span>
+<span class="kw">Method</span>: <span class="val">POST</span>
+
+<span class="cmt">// Headers</span>
+<span class="kw">x-api-key</span>: <span class="val">{{your_api_key}}</span>
+<span class="kw">anthropic-version</span>: <span class="val">2023-06-01</span>
+<span class="kw">content-type</span>: <span class="val">application/json</span>
+
+<span class="cmt">// Body（JSON）</span>
+{
+  <span class="kw">"model"</span>: <span class="val">"claude-sonnet-4-5"</span>,
+  <span class="kw">"max_tokens"</span>: <span class="val">2000</span>,
+  <span class="kw">"messages"</span>: [{
+    <span class="kw">"role"</span>: <span class="val">"user"</span>,
+    <span class="kw">"content"</span>: <span class="val">"請為以下主題撰寫一篇 SEO 部落格文章：
+主題：{{1.topic}}
+目標關鍵字：{{1.keywords}}
+字數：1000-1200 字
+語氣：專業但易讀，適合 25-35 歲行銷人員
+請包含：H2 小標、FAQ 區塊、結尾 CTA"</span>
+  }]
+}
+    </div>
+    <div class="prompt-note">把 Airtable 欄位用 {{1.topic}}、{{1.keywords}} 動態帶入，每次觸發都能生成對應主題的內容</div>
+  </div>
+
+  <!-- prompt 2 -->
+  <div style="margin:1.5rem 0 .5rem; font-size:13px; color:var(--ink2); font-weight:500;">流程 3 · 週報 AI 摘要——提示詞模板</div>
+  <div class="prompt-box">
+    <div class="prompt-head">
+      <div class="dots"><div class="dot" style="background:#E5645A;"></div><div class="dot" style="background:#E8C547;"></div><div class="dot" style="background:#5DBF7A;"></div></div>
+      <span class="label">Make → Claude API → 週報摘要生成</span>
+      <span class="tool-pill">Make</span>
+    </div>
+    <div class="prompt-body"><span class="cmt">// 週報摘要 Prompt（帶入 GA4 + 社群數據）</span>
+<span class="val">"以下是本週行銷數據，請生成一份給主管的週報摘要（200 字以內）：
+
+【網站數據】
+- 總流量：{{ga4.sessions}} 次（較上週 {{ga4.change}}%）
+- 轉換率：{{ga4.conversion}}%
+- 熱門頁面：{{ga4.top_page}}
+
+【社群數據】
+- IG 觸及：{{ig.reach}} 人
+- 互動率：{{ig.engagement_rate}}%
+- 新增粉絲：{{ig.new_followers}}
+
+請：
+1. 用 2-3 句話說明本週整體表現
+2. 指出最值得關注的亮點或警訊
+3. 給出下週建議行動方向（1 條即可）
+
+語氣：簡潔、數據導向，不需要客套語"</span>
+    </div>
+    <div class="prompt-note">動態變數用雙大括號帶入，Make 會自動將前面模組的輸出值填入對應位置</div>
+  </div>
+
+  <!-- prompt 3 -->
+  <div style="margin:1.5rem 0 .5rem; font-size:13px; color:var(--ink2); font-weight:500;">流程 1 · 跨平台貼文——Zapier Filter 設定邏輯</div>
+  <div class="prompt-box">
+    <div class="prompt-head">
+      <div class="dots"><div class="dot" style="background:#E5645A;"></div><div class="dot" style="background:#E8C547;"></div><div class="dot" style="background:#5DBF7A;"></div></div>
+      <span class="label">Zapier → Filter → 條件設定</span>
+      <span class="tool-pill z">Zapier</span>
+    </div>
+    <div class="prompt-body"><span class="cmt">// Zapier Filter 條件（只在「狀態 = 待發佈」時繼續執行）</span>
+
+<span class="kw">條件 1</span>:
+  欄位: <span class="val">Status</span>
+  運算子: <span class="val">(Text) Exactly matches</span>
+  值: <span class="val">待發佈</span>
+
+<span class="kw">條件 2</span>（AND）:
+  欄位: <span class="val">Scheduled_Date</span>
+  運算子: <span class="val">(Date) Is before or on</span>
+  值: <span class="val">Today</span>
+
+<span class="cmt">// 不符合條件時：停止執行，不計入 Zapier 任務次數</span>
+<span class="cmt">// 注意：Zapier 免費版每月 100 次任務，善用 Filter 避免浪費</span>
+    </div>
+    <div class="prompt-note">加上日期條件可避免提前填入的貼文被提前發出，是排程流程的基本防護設定</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <h2>常見錯誤與解法</h2>
+  </div>
+
+  <div style="display:flex; flex-direction:column; gap:.75rem; margin-bottom:2rem;">
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1rem 1.25rem; display:flex; gap:12px; align-items:flex-start;">
+      <span style="color:var(--red); font-size:16px; flex-shrink:0;">✗</span>
+      <div>
+        <div style="font-size:13px; font-weight:500; color:var(--ink); margin-bottom:4px;">Make 執行失敗，顯示「Error 400」</div>
+        <div style="font-size:12.5px; color:var(--ink3); line-height:1.6;">通常是 API 請求格式錯誤。檢查 JSON body 是否有多餘的逗號，或變數名稱拼錯。建議用 Make 的「Run once」模式逐步測試每個模組。</div>
+      </div>
+    </div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1rem 1.25rem; display:flex; gap:12px; align-items:flex-start;">
+      <span style="color:var(--red); font-size:16px; flex-shrink:0;">✗</span>
+      <div>
+        <div style="font-size:13px; font-weight:500; color:var(--ink); margin-bottom:4px;">Zapier 任務次數很快用完</div>
+        <div style="font-size:12.5px; color:var(--ink3); line-height:1.6;">免費版每月只有 100 次，建議全部加上 Filter 條件。或改用 Make 免費版（每月 1,000 次操作），對高頻流程更划算。</div>
+      </div>
+    </div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1rem 1.25rem; display:flex; gap:12px; align-items:flex-start;">
+      <span style="color:var(--red); font-size:16px; flex-shrink:0;">✗</span>
+      <div>
+        <div style="font-size:13px; font-weight:500; color:var(--ink); margin-bottom:4px;">Claude API 生成內容品質不穩定</div>
+        <div style="font-size:12.5px; color:var(--ink3); line-height:1.6;">在 Prompt 中加入「system 角色設定」和明確的輸出格式要求。避免用太短的 prompt——細節越多，輸出越穩定。</div>
+      </div>
+    </div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1rem 1.25rem; display:flex; gap:12px; align-items:flex-start;">
+      <span style="color:var(--red); font-size:16px; flex-shrink:0;">✗</span>
+      <div>
+        <div style="font-size:13px; font-weight:500; color:var(--ink); margin-bottom:4px;">社群 API 授權突然失效</div>
+        <div style="font-size:12.5px; color:var(--ink3); line-height:1.6;">Meta、Buffer 的 Access Token 有效期限不同，建議在 Make 開啟「Email on Error」通知，流程失敗時立即收到警報。</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════ PANEL 4: CHECKLIST ══════ -->
+<div id="panel-checklist" class="panel">
+<div class="inner">
+
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <h2>團隊導入自動化：分階段清單</h2>
+  </div>
+
+  <div class="checklist-grid">
+    <div class="checklist-card">
+      <h3>🌱 第一週：評估與準備</h3>
+      <div class="check-item">盤點目前最耗時的重複性行銷工作（發文、回覆、整理數據）</div>
+      <div class="check-item">確認需要串接的工具清單（Google Sheets、Slack、CRM）</div>
+      <div class="check-item">建立免費的 Make 和 Zapier 帳號並熟悉介面</div>
+      <div class="check-item">設定 Claude API Key（Anthropic Console）</div>
+      <div class="check-item">選定第一個要自動化的流程（建議從「表單 → 通知」開始）</div>
+    </div>
+
+    <div class="checklist-card">
+      <h3>🔧 第二週：第一條流程上線</h3>
+      <div class="check-item">用「Run once」模式測試每個模組，確認資料正確傳遞</div>
+      <div class="check-item">設定錯誤通知（Email on Error 或 Slack 警報）</div>
+      <div class="check-item">建立測試用的假資料，避免影響正式資料</div>
+      <div class="check-item">正式上線前，人工執行一次完整流程確認輸出正確</div>
+      <div class="check-item">記錄流程設定截圖，建立內部文件</div>
+    </div>
+
+    <div class="checklist-card">
+      <h3>📈 第三至四週：擴展與優化</h3>
+      <div class="check-item">追蹤第一條流程的執行成功率與節省時間</div>
+      <div class="check-item">逐步加入第二、三條流程</div>
+      <div class="check-item">優化 Claude Prompt，確保 AI 輸出品質穩定</div>
+      <div class="check-item">建立 Google Sheets 作為流程監控儀表板</div>
+      <div class="check-item">向團隊分享自動化成效（省多少時間、多少次錯誤避免）</div>
+    </div>
+
+    <div class="checklist-card">
+      <h3>🏗 持續維護事項</h3>
+      <div class="check-item">每月檢查 API Token 是否過期</div>
+      <div class="check-item">Make / Zapier 月度用量是否接近上限</div>
+      <div class="check-item">有工具更新 API 版本時，更新對應設定</div>
+      <div class="check-item">新加入的行銷人員有文件可以快速了解流程</div>
+      <div class="check-item">每季重新評估哪些流程可以進一步優化</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="sec-head">
+    <span class="sec-num">07</span>
+    <h2>優先導入建議順序</h2>
+  </div>
+
+  <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:2rem;">
+    <div style="display:flex; align-items:center; gap:12px; padding:1rem 1.25rem; background:var(--surface); border:1px solid var(--border); border-radius:10px;">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:22px; color:var(--green); width:32px; flex-shrink:0;">1</span>
+      <div style="flex:1;">
+        <div style="font-size:13.5px; font-weight:500; color:var(--ink); margin-bottom:2px;">表單填寫 → 自動 Email + CRM（Zapier）</div>
+        <div style="font-size:12px; color:var(--ink3);">最快上手、即時見效，對客戶體驗影響最大</div>
+      </div>
+      <span class="wf-difficulty diff-1">入門</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; padding:1rem 1.25rem; background:var(--surface); border:1px solid var(--border); border-radius:10px;">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:22px; color:var(--green); width:32px; flex-shrink:0;">2</span>
+      <div style="flex:1;">
+        <div style="font-size:13.5px; font-weight:500; color:var(--ink); margin-bottom:2px;">品牌關鍵字監測 → Slack 通知（Zapier）</div>
+        <div style="font-size:12px; color:var(--ink3);">設定簡單，直接提升行銷團隊的反應速度</div>
+      </div>
+      <span class="wf-difficulty diff-1">入門</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; padding:1rem 1.25rem; background:var(--surface); border:1px solid var(--border); border-radius:10px;">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:22px; color:var(--accent); width:32px; flex-shrink:0;">3</span>
+      <div style="flex:1;">
+        <div style="font-size:13.5px; font-weight:500; color:var(--ink); margin-bottom:2px;">社群內容跨平台同步（Make）</div>
+        <div style="font-size:12px; color:var(--ink3);">省去最多重複操作，每週節省 3–5 小時</div>
+      </div>
+      <span class="wf-difficulty diff-2">中等</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; padding:1rem 1.25rem; background:var(--surface); border:1px solid var(--border); border-radius:10px;">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:22px; color:var(--accent); width:32px; flex-shrink:0;">4</span>
+      <div style="flex:1;">
+        <div style="font-size:13.5px; font-weight:500; color:var(--ink); margin-bottom:2px;">電商訂單 → 再行銷序列（Zapier）</div>
+        <div style="font-size:12px; color:var(--ink3);">直接影響營收，適合有電商業務的品牌</div>
+      </div>
+      <span class="wf-difficulty diff-2">中等</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; padding:1rem 1.25rem; background:var(--surface); border:1px solid var(--border); border-radius:10px;">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:22px; color:var(--red); width:32px; flex-shrink:0;">5</span>
+      <div style="flex:1;">
+        <div style="font-size:13.5px; font-weight:500; color:var(--ink); margin-bottom:2px;">AI 內容批量產製 + 週報自動化（Make + Claude API）</div>
+        <div style="font-size:12px; color:var(--ink3);">效益最大，但需要 API 設定能力，建議最後導入</div>
+      </div>
+      <span class="wf-difficulty diff-3">進階</span>
+    </div>
+  </div>
+
+  <div class="portfolio-note">
+    <h3>📁 作品集使用說明</h3>
+    <p>這份文件展示的是「我理解行銷自動化的邏輯，以及如何把 AI 工具整合進工作流程」的能力。面試時，可以選擇其中 1–2 個工作流程詳細說明你的設計思路，比背誦全部流程更有說服力。重點是讓面試官感受到：你不只是「知道有這些工具」，而是「知道什麼情況下用哪個工具、為什麼這樣設計」。</p>
+  </div>
+
+</div>
+</div>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

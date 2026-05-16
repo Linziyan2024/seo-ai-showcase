@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面試準備手冊｜AI 行銷職位</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F8F7F4;
+    --ink: #1C1C1E;
+    --ink2: #636366;
+    --ink3: #AEAEB2;
+    --surface: #FFFFFF;
+    --border: #E5E5EA;
+    --accent: #1C1C1E;
+    --gold: #B8960C;
+    --gold-bg: #FEFCE8;
+    --blue-bg: #EFF6FF;
+    --blue-t: #1D4ED8;
+    --green-bg: #F0FDF4;
+    --green-t: #166534;
+    --red-bg: #FFF1F2;
+    --red-t: #9F1239;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  /* ── TABS NAV ── */
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    gap: 0;
+    border-bottom: 1px solid #333;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    color: rgba(255,255,255,.5);
+    padding-right: 2rem;
+    border-right: 1px solid rgba(255,255,255,.1);
+    margin-right: 1.5rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,.45);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 13px;
+    padding: 1rem 1.1rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: rgba(255,255,255,.75); }
+  .tab-btn.active { color: #fff; border-bottom-color: #fff; }
+
+  /* ── PANELS ── */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── SHARED ── */
+  .page-inner { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+  .page-header { margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: .6rem;
+  }
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    line-height: 1.2;
+    margin-bottom: .75rem;
+  }
+  .page-header p { font-size: 14px; color: var(--ink2); max-width: 560px; }
+
+  /* ── SCRIPT SECTIONS ── */
+  .script-block {
+    margin-bottom: 1.75rem;
+  }
+  .script-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: .75rem;
+  }
+  .script-num {
+    width: 28px; height: 28px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .script-label h2 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .script-label .timing {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--ink3);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 2px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .script-content {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem 1.5rem;
+    position: relative;
+  }
+  .script-content p {
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: var(--ink);
+    margin-bottom: .9rem;
+  }
+  .script-content p:last-child { margin-bottom: 0; }
+  .script-content .note {
+    font-size: 12px;
+    color: var(--ink3);
+    background: var(--bg);
+    border-radius: 8px;
+    padding: .6rem .9rem;
+    margin-top: .75rem;
+    border-left: 3px solid var(--border);
+  }
+  .script-content .note::before { content: '💡 說話技巧：'; font-weight: 500; color: var(--ink2); }
+
+  .highlight { background: #FEF9C3; padding: 1px 4px; border-radius: 3px; }
+  .bold { font-weight: 500; }
+
+  /* connector arrow */
+  .connector {
+    text-align: center;
+    color: var(--ink3);
+    font-size: 20px;
+    line-height: 1;
+    margin: .5rem 0;
+  }
+
+  /* total time bar */
+  .time-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .time-bar-label { font-size: 13px; color: var(--ink2); }
+  .time-segments { display: flex; gap: 4px; flex: 1; min-width: 200px; }
+  .seg {
+    height: 8px;
+    border-radius: 4px;
+    transition: opacity .2s;
+  }
+  .seg:hover { opacity: .7; }
+  .time-total { font-size: 13px; font-weight: 500; color: var(--ink); white-space: nowrap; }
+
+  /* ── QA SECTION ── */
+  .qa-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  .qa-q {
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    transition: background .15s;
+    user-select: none;
+  }
+  .qa-q:hover { background: #FAFAF9; }
+  .qa-icon {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .qa-q-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    flex: 1;
+    line-height: 1.5;
+  }
+  .qa-chevron {
+    font-size: 18px;
+    color: var(--ink3);
+    transition: transform .25s;
+    flex-shrink: 0;
+    line-height: 1.5;
+  }
+  .qa-item.open .qa-chevron { transform: rotate(180deg); }
+  .qa-a {
+    display: none;
+    padding: 0 1.25rem 1.25rem 3rem;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--ink2);
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    margin-top: 0;
+  }
+  .qa-item.open .qa-a { display: block; }
+  .qa-a p { margin-bottom: .75rem; }
+  .qa-a p:last-child { margin-bottom: 0; }
+  .qa-a strong { color: var(--ink); font-weight: 500; }
+  .qa-a .answer-point {
+    display: flex;
+    gap: 8px;
+    margin-bottom: .5rem;
+    font-size: 13.5px;
+    align-items: flex-start;
+  }
+  .qa-a .answer-point::before {
+    content: '→';
+    color: var(--ink3);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .qa-a .sample {
+    background: var(--blue-bg);
+    border-radius: 8px;
+    padding: .85rem 1rem;
+    font-size: 13.5px;
+    color: var(--blue-t);
+    margin-top: .75rem;
+    border-left: 3px solid #93C5FD;
+    line-height: 1.7;
+  }
+  .qa-a .sample::before { content: '範例回答：'; display: block; font-weight: 500; margin-bottom: .4rem; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+  .qa-a .trap {
+    background: var(--red-bg);
+    border-radius: 8px;
+    padding: .75rem 1rem;
+    font-size: 13px;
+    color: var(--red-t);
+    margin-top: .75rem;
+  }
+  .qa-a .trap::before { content: '⚠ 避免這樣說：'; font-weight: 500; }
+
+  .qa-category {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin: 2rem 0 .75rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .qa-category::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* difficulty badges */
+  .diff-easy { background: var(--green-bg); color: var(--green-t); }
+  .diff-mid { background: var(--gold-bg); color: var(--gold); }
+  .diff-hard { background: var(--red-bg); color: var(--red-t); }
+
+  /* ── TIPS PANEL ── */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .tip-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem;
+  }
+  .tip-card h3 {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: .5rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tip-card p { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+  .checklist { list-style: none; }
+  .checklist li {
+    font-size: 13.5px;
+    color: var(--ink2);
+    padding: .5rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '☐'; color: var(--ink3); flex-shrink: 0; font-size: 14px; }
+  .checklist.done li::before { content: '☑'; color: #22C55E; }
+</style>
+</head>
+<body>
+
+<nav class="sticky-nav">
+  <div class="nav-logo">面試準備</div>
+  <button class="tab-btn active" onclick="switchTab('script', this)">自我介紹說稿</button>
+  <button class="tab-btn" onclick="switchTab('qa', this)">常見問題 Q&A</button>
+  <button class="tab-btn" onclick="switchTab('tips', this)">面試當天準備</button>
+</nav>
+
+<!-- ════════════════════════════════════════
+     TAB 1: SCRIPT
+════════════════════════════════════════ -->
+<div id="panel-script" class="panel active">
+<div class="page-inner">
+  <div class="page-header">
+    <div class="eyebrow">5–7 分鐘版本</div>
+    <h1>自我介紹說稿</h1>
+    <p>轉職背景 × AI 工具應用。五個段落，每段有明確重點，可依面試時間調整長短。</p>
+  </div>
+
+  <!-- time bar -->
+  <div class="time-bar">
+    <div class="time-bar-label">預估時間</div>
+    <div class="time-segments">
+      <div class="seg" style="width:12%; background:#6366F1;" title="開場"></div>
+      <div class="seg" style="width:22%; background:#8B5CF6;" title="背景"></div>
+      <div class="seg" style="width:28%; background:#EC4899;" title="轉折"></div>
+      <div class="seg" style="width:22%; background:#F97316;" title="作品"></div>
+      <div class="seg" style="width:16%; background:#22C55E;" title="結尾"></div>
+    </div>
+    <div class="time-total">約 5–7 分鐘</div>
+  </div>
+
+  <!-- BLOCK 1 -->
+  <div class="script-block">
+    <div class="script-label">
+      <div class="script-num">1</div>
+      <h2>開場破冰</h2>
+      <span class="timing">30–40 秒</span>
+    </div>
+    <div class="script-content">
+      <p>您好，我叫〔<span class="highlight">你的名字</span>〕，很高興有機會來到這裡。</p>
+      <p>我想用一句話描述我自己：<span class="bold">一個習慣用數據和工具解決問題的人，現在把這個習慣帶進行銷領域。</span></p>
+      <div class="note">開場不要寒暄太久。這句話的目的是先丟出一個「鉤子」，讓面試官好奇你的背景故事。</div>
+    </div>
+  </div>
+
+  <div class="connector">↓</div>
+
+  <!-- BLOCK 2 -->
+  <div class="script-block">
+    <div class="script-label">
+      <div class="script-num">2</div>
+      <h2>過去背景（前職經驗）</h2>
+      <span class="timing">1–1.5 分鐘</span>
+    </div>
+    <div class="script-content">
+      <p>我過去在〔<span class="highlight">你的產業/職位</span>〕工作了〔<span class="highlight">年數</span>〕年，主要負責〔<span class="highlight">核心工作內容，1–2 句即可</span>〕。</p>
+      <p>在那段時間，我養成了幾個習慣：<span class="bold">第一，習慣在做任何事之前先問「為什麼」；第二，習慣用工具和流程降低重複勞動；第三，習慣關注數字，用結果驗證方向。</span></p>
+      <p>這些習慣，其實和行銷的本質非常接近。</p>
+      <div class="note">不要花太多時間解釋前職細節。重點是把過去的經驗「翻譯」成行銷能用的能力，讓面試官看到連結。</div>
+    </div>
+  </div>
+
+  <div class="connector">↓</div>
+
+  <!-- BLOCK 3 -->
+  <div class="script-block">
+    <div class="script-label">
+      <div class="script-num">3</div>
+      <h2>轉職動機與 AI 切入點</h2>
+      <span class="timing">1.5–2 分鐘</span>
+    </div>
+    <div class="script-content">
+      <p>轉職的契機，是我開始系統性地使用 AI 工具之後。</p>
+      <p>一開始只是用 ChatGPT 和 Claude 幫我整理資料、寫草稿。但慢慢地，我發現這些工具真正有價值的地方，<span class="bold">不是「幫你打字」，而是「幫你把模糊的想法變得具體」</span>——這讓我想到，行銷的核心不就是這件事嗎？把品牌想說的話，清楚地傳遞給對的人。</p>
+      <p>所以我開始主動學習：研究 SEO 的邏輯、練習用 AI 做內容優化、摸索圖像生成工具的工作流程。我希望帶進這個職位的，<span class="bold">是一個已經知道怎麼和 AI 協作、而不是還在學習怎麼用工具的人。</span></p>
+      <div class="note">「轉職」這件事本身不是問題，問題是你有沒有主動填補能力缺口。這段的重點是展示你的「主動性」，而不是解釋「為什麼離開前一份工作」。</div>
+    </div>
+  </div>
+
+  <div class="connector">↓</div>
+
+  <!-- BLOCK 4 -->
+  <div class="script-block">
+    <div class="script-label">
+      <div class="script-num">4</div>
+      <h2>具體作品展示</h2>
+      <span class="timing">1.5–2 分鐘</span>
+    </div>
+    <div class="script-content">
+      <p>為了讓這次面試更有說服力，我在來之前準備了三件作品，想花一點時間跟您分享。</p>
+      <p><span class="bold">第一件</span>，是一篇 SEO 部落格文章的優化對比。我用 Claude 進行四輪 prompt 設計，把一篇初稿從 SEO 評分 42 分提升到 88 分，並完整記錄每一步的思路和 prompt。</p>
+      <p><span class="bold">第二件</span>，是一張行銷內容產製的 AI 工作流程圖。涵蓋從策略規劃、SEO 文案、圖像生成到審稿發佈的完整 SOP，並且設計了審核退回的循環機制。</p>
+      <p><span class="bold">第三件</span>，是一份針對行銷團隊的 AI 工具比較指南，整理了七款工具的適用情境和工具組合建議。</p>
+      <p>如果方便的話，我帶了這些作品，可以當場展示。</p>
+      <div class="note">說完作品後停頓一秒，觀察面試官反應。如果他們表現出興趣，立刻打開給他們看；如果他們點頭繼續，就直接進入結尾。</div>
+    </div>
+  </div>
+
+  <div class="connector">↓</div>
+
+  <!-- BLOCK 5 -->
+  <div class="script-block">
+    <div class="script-label">
+      <div class="script-num">5</div>
+      <h2>結尾與期待</h2>
+      <span class="timing">30–45 秒</span>
+    </div>
+    <div class="script-content">
+      <p>加入這個職位，我最期待的是：<span class="bold">在一個真實的行銷環境中，把 AI 工具從「個人習慣」變成「團隊資產」</span>——不只是自己用，而是幫助整個團隊建立更有效率的內容產製流程。</p>
+      <p>我知道自己在行銷上還有很多要學，但我帶來的，是一個<span class="bold">願意動手、習慣用工具、能夠快速上手</span>的工作方式。</p>
+      <p>以上是我的自我介紹，謝謝您的時間。</p>
+      <div class="note">結尾不要說「請多指教」或「希望能加入貴公司」這種空洞的話。用一個具體的期待作結，比客套話有力量多了。</div>
+    </div>
+  </div>
+
+  <!-- SHORT VER -->
+  <div style="margin-top:2.5rem; padding:1.5rem; background:var(--surface); border:1px solid var(--border); border-radius:12px;">
+    <div class="eyebrow" style="margin-bottom:.5rem;">3 分鐘精簡版提示</div>
+    <p style="font-size:13.5px; color:var(--ink2); line-height:1.7;">如果面試官說「簡單介紹一下自己就好」，直接用這個順序：<br>
+    <span style="color:var(--ink); font-weight:500;">① 一句話定位自己（段落1）→ ② 過去背景一句帶過 → ③ 為什麼想做行銷+AI切入（段落3前半）→ ④ 三件作品各一句 → ⑤ 結尾期待一句</span><br>
+    不要試圖把五個段落都塞進三分鐘。寧可說得少但說得清楚。</p>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════════════════════════
+     TAB 2: Q&A
+════════════════════════════════════════ -->
+<div id="panel-qa" class="panel">
+<div class="page-inner">
+  <div class="page-header">
+    <div class="eyebrow">12 個高機率問題</div>
+    <h1>面試 Q&A 準備</h1>
+    <p>點擊問題展開建議回答框架與範例，標示難度讓你優先準備。</p>
+  </div>
+
+  <!-- CATEGORY: 轉職動機 -->
+  <div class="qa-category">轉職動機類</div>
+
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">
+      <div class="qa-icon diff-easy">易</div>
+      <div class="qa-q-text">你為什麼想從事行銷？為什麼是現在？</div>
+      <div class="qa-chevron">⌄</div>
+    </div>
+    <div class="qa-a">
+      <div class="answer-point">不要說「因為行銷很有趣」或「我喜歡創意」，太模糊且人人都這樣說。</div>
+      <div class="answer-point">用「具體事件」帶出動機：什麼事讓你決定轉職？</div>
+      <div class="answer-point">強調「現在」的時間點——AI 工具讓轉職的門檻和時間成本都降低了，你抓住了這個機會。</div>
+      <div class="sample">
+        我在使用 AI 工具處理工作時，發現自己對「如何讓內容被對的人看到」這件事越來越著迷。我開始花業餘時間研究 SEO、練習用 Claude 改寫文案，後來決定認真轉職。時間點的選擇是因為現在行銷工作和 AI 工具的結合正在快速發展，我認為這是一個進場的好時機。
+      </div>
+    </div>
+  </div>
+
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">
+      <div class="qa-icon diff-mid">中</div>
+      <div class="qa-q-text">你過去做的工作和行銷差很多，為什麼我們要選你而不是有行銷背景的人？</div>
+      <div class="qa-chevron">⌄</div>
+    </div>
+    <div class="qa-a">
+      <div class="answer-point">不要防守，正面迎擊：承認差異，然後翻轉它。</div>
+      <div class="answer-point">強調「跨領域觀點」是優勢，而不是缺點。</div>
+      <div class="answer-point">用具體的可轉移技能說話，而不是抽象的「學習力強」。</div>
+      <div class="sample">
+        有行銷背景的人知道行銷的做法，我帶來的是不同的思考框架。我在前職養成了用流程和數據解決問題的習慣，這讓我在設計 AI 工作流程、分析工具效益時有一套自己的方法論。加上我已經花了時間補足行銷的基礎知識，我相信這個組合反而是加分的。
+      </div>
+      <div class="trap">「我雖然沒有經驗，但我很努力學習」——這樣說等於承認了弱點卻沒有提供解決方案。</div>
+    </div>
+  </div>
+
+  <!-- CATEGORY: AI 能力 -->
+  <div class="qa-category">AI 工具能力類</div>
+
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">
+      <div class="qa-icon diff-easy">易</div>
+      <div class="qa-q-text">你平常都用哪些 AI 工具？各自用來做什麼？</div>
+      <div class="qa-chevron">⌄</div>
+    </div>
+    <div class="qa-a">
+      <div class="answer-point">不要列出所有工具名稱，重點是說明「你怎麼用」，而不是「你知道有哪些工具」。</div>
+      <div class="answer-point">每個工具配一個具體的使用情境，讓面試官感受到你真的在用，不是背了一份清單。</div>
+      <div class="sample">
+        主要用 Claude 做長篇內容，它在結構邏輯和語氣維持上比較穩定，我會用它做 SEO 文章的改寫和 SOP 文件。ChatGPT 我拿來做快速腦力激盪，比如標題發想或廣告文案的多版本測試。圖像的話，Midjourney 是主力，適合需要高質感氛圍圖的場合；如果在 ChatGPT 裡要快速生成示意圖，就用 DALL·E 3。
+      </div>
+    </div>
+  </div>
+
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">
+      <div class="qa-icon diff-mid">中</div>
+      <div class="qa-q-text">可以說說你怎麼設計 prompt 嗎？有什麼原則？</div>
+      <div class="qa-chevron">⌄</div>
+    </div>
+    <div class="qa-a">
+      <div class="answer-point">這是核心問題，面試官想知道你是「真的會用」還是「會說」。</div>
+      <div class="answer-point">給出 2–3 個具體原則，最好加一個例子說明差別。</div>
+      <div class="sample">
+        我有三個原則：第一，「給邊界」——明確告知字數、語氣、目標受眾，讓 AI 在框架內發揮；第二，「拆步驟」——不要一次要求太多，關鍵字分析、文章架構、初稿撰寫分成不同對話做；第三，「人來審查」——AI 的輸出是起點，我負責判斷哪些適合品牌調性。舉例來說，寫 SEO 文章時，我會先 prompt 做關鍵字分析，確認方向後再 prompt 規劃架構，最後才進入撰文，這樣每一步的品質都比一次要求到位高很多。
+      </div>
+    </div>
+  </div>
+
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">
+      <div class="qa-icon diff-hard">難</div>
+      <div class="qa-q-text">AI 生成的內容要怎麼確保品質？你怎麼判斷它是不是好的？</div>
+      <div class="qa-chevron">⌄</div>
+    </div>
+    <div class="qa-a">
+      <div class="answer-point">這個問題在測試你有沒有「批判性思維」，而不是只會讚美 AI。</div>
+      <div class="answer-point">說出你的審查清單：哪些面向要人工驗證？</div>
+      <div class="answer-point">強調「AI 是工具，判斷是人的責任」這個核心立場。</div>
+      <div class="sample">
+        我會從幾個層面審查：第一是事實準確性，AI 有時會「幻想」數據，所有數字和引用我都會自己查；第二是品牌語氣，AI 不了解品牌的歷史和個性，語氣對不對只有人能判斷；第三是 SEO 指標，關鍵字密度、標題結構這些我會用工具交叉確認。最終來說，AI 提供速度，我提供判斷力。
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORY: 行銷知識 -->
+  <div class="qa-category">行銷知識類</div>
+
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">
+      <div class="qa-icon diff-mid">中</div>
+      <div class="qa-q-text">你對 SEO 的了解程度如何？</div>
+      <div class="qa-chevron">⌄</div>
+    </div>
+    <div class="qa-a">
+      <div class="answer-point">如實說明你的程度，不要誇大，但也要具體說出你知道的。</div>
+      <div class="answer-point">結構：我知道什麼 → 我實際做過什麼 → 我還在學習什麼。</div>
+      <div class="sample">
+        我了解 SEO 的基本框架：關鍵字研究、on-page 優化（H1/H2 結構、關鍵字密度、Meta description）、內容長度與可讀性對排名的影響。實際操作上，我用 Claude 做過 SEO 文章的優化，把一篇初稿的 SEO 評分從 42 提升到 88 分，也整理了 prompt 流程可以重複使用。技術 SEO（如網站速度、schema markup）我目前還在學習，但基礎內容策略這塊我是有實際操作過的。
+      </div>
+    </div>
+  </div>
+
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">
+      <div class="qa-icon diff-mid">中</div>
+      <div class="qa-q-text">如果我們下個月要推一個新產品，你會怎麼規劃內容行銷？</div>
+      <div class="qa-chevron">⌄</div>
+    </div>
+    <div class="qa-a">
+      <div class="answer-point">這是情境題，在測試你的行銷思維，不是要你給完整計畫。</div>
+      <div class="answer-point">用一個清楚的框架回答：先問（目標是什麼）→ 再規劃（分階段）→ 說工具。</div>
+      <div class="sample">
+        我會先問幾個問題：目標受眾是誰？希望達成的是品牌聲量還是直接轉換？預算範圍？確認之後，我會把內容分三個階段規劃：上市前的「造勢期」用社群懸念貼文和部落格預告；上市當週的「爆發期」集中投放廣告和 KOL 合作；上市後的「留存期」用 SEO 文章和 EDM 持續轉換。AI 在這個流程裡可以大幅加速文案產製，讓我有更多時間做策略判斷。
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORY: 行為問題 -->
+  <div class="qa-category">行為與性格類</div>
+
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">
+      <div class="qa-icon diff-easy">易</div>
+      <div class="qa-q-text">說說你遇過最大的工作挑戰，以及你怎麼解決的。</div>
+      <div class="qa-chevron">⌄</div>
+    </div>
+    <div class="qa-a">
+      <div class="answer-point">用 STAR 框架回答：情境 → 任務 → 行動 → 結果。</div>
+      <div class="answer-point">選一個能展示「解決問題能力」或「跨部門協作」的例子。</div>
+      <div class="answer-point">如果能和 AI 工具扯上關係更好，但不是必要的。</div>
+      <div class="sample">
+        在前職，我負責一個需要整合五個部門資料的季度報告，每次都要花兩天整理。我主動引入 AI 輔助的整理流程，把部分重複性工作自動化，最後把時間壓縮到半天。這個經驗讓我意識到，很多低效率不是因為工作本身難，而是因為沒有建立好的工具流程。
+      </div>
+    </div>
+  </div>
+
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">
+      <div class="qa-icon diff-mid">中</div>
+      <div class="qa-q-text">你怎麼跟上 AI 工具的更新速度？有什麼學習方法？</div>
+      <div class="qa-chevron">⌄</div>
+    </div>
+    <div class="qa-a">
+      <div class="answer-point">面試官想知道你是主動學習的人，不是只跟風。</div>
+      <div class="answer-point">說出具體的資訊來源和學習習慣。</div>
+      <div class="sample">
+        我有幾個固定的習慣：追蹤幾個 AI 行銷相關的 Newsletter 和 Twitter 帳號；每當有新工具出來，我會先花 30 分鐘實際動手試，而不是只看介紹文；有效的工具我會整理進自己的工具筆記，記下適合的使用情境。我覺得跟上 AI 的關鍵不是「什麼都用」，而是「知道什麼時候用哪個最合適」。
+      </div>
+    </div>
+  </div>
+
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">
+      <div class="qa-icon diff-hard">難</div>
+      <div class="qa-q-text">你的薪資期待是多少？</div>
+      <div class="qa-chevron">⌄</div>
+    </div>
+    <div class="qa-a">
+      <div class="answer-point">事前做好市場調查（104、Glassdoor、問前輩）。</div>
+      <div class="answer-point">給一個合理區間，不要只說「看公司規定」——顯得沒主見。</div>
+      <div class="answer-point">強調你更看重的是成長機會，但也要有底線。</div>
+      <div class="sample">
+        根據我對這個職位市場行情的了解，我的期待區間是〔填入你的數字〕。我更看重的是能否在這個職位快速累積行銷實戰經驗，薪資方面有一定彈性，但希望能在這個範圍內討論。
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORY: 反問問題 -->
+  <div class="qa-category">你可以反問面試官的問題</div>
+
+  <div class="qa-item" onclick="toggleQA(this)">
+    <div class="qa-q">
+      <div class="qa-icon diff-easy">問</div>
+      <div class="qa-q-text">你有沒有什麼問題想問我們？（準備 2–3 個好問題）</div>
+      <div class="qa-chevron">⌄</div>
+    </div>
+    <div class="qa-a">
+      <div class="answer-point">不要說「沒有，我都了解了」——這是失分題。</div>
+      <div class="answer-point">準備展現你思考深度的問題，而不是可以自己 Google 到答案的。</div>
+      <div class="sample">
+        建議問題一：「這個職位目前最大的挑戰是什麼？」<br><br>
+        建議問題二：「團隊目前在 AI 工具的導入上是什麼狀態？是否有既有的工作流程？」<br><br>
+        建議問題三：「這個職位大概多久後，您會期待我能獨立負責一個完整的內容專案？」
+      </div>
+      <div class="trap">不要問「薪水什麼時候發」、「幾天年假」這類問題，第一輪面試問這些太早了。</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════════════════════════════════
+     TAB 3: TIPS
+════════════════════════════════════════ -->
+<div id="panel-tips" class="panel">
+<div class="page-inner">
+  <div class="page-header">
+    <div class="eyebrow">面試當天</div>
+    <h1>準備檢查清單</h1>
+    <p>面試前一天和當天的準備事項，確保你以最好的狀態出現。</p>
+  </div>
+
+  <div class="tips-grid">
+    <div class="tip-card">
+      <h3>🗂 帶去面試的東西</h3>
+      <p>筆電或平板（展示三件作品）、作品集列印版備用、履歷兩份、水、筆記本與筆。</p>
+    </div>
+    <div class="tip-card">
+      <h3>🔍 事前研究公司</h3>
+      <p>查看公司官網、IG、部落格，了解他們現在的內容風格和行銷方向，面試時可以自然帶入。</p>
+    </div>
+    <div class="tip-card">
+      <h3>⏱ 說話節奏</h3>
+      <p>每個回答控制在 1.5–2 分鐘以內。說完後稍作停頓，觀察面試官有沒有追問的意思，不要自己填空。</p>
+    </div>
+    <div class="tip-card">
+      <h3>💻 展示作品的時機</h3>
+      <p>自我介紹段落 4 說完後，主動問「方便讓我展示一下嗎？」不要等對方問。主動展示展現積極態度。</p>
+    </div>
+  </div>
+
+  <div style="margin-top:1.5rem;">
+    <div class="eyebrow" style="margin-bottom:1rem;">面試前一天確認清單</div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.2rem 1.5rem;">
+      <ul class="checklist">
+        <li>大聲練習說稿一遍，計時確認在 5–7 分鐘內</li>
+        <li>確認三件作品都能正常開啟，網路版或本機版都備好</li>
+        <li>搜尋公司近三個月的 IG 或部落格內容，記下 1–2 個觀察</li>
+        <li>準備好 2–3 個反問面試官的問題</li>
+        <li>確認面試地點、交通方式和時間，比預定時間早 10 分鐘到</li>
+        <li>準備薪資期待的數字範圍（查 104 市場薪資）</li>
+        <li>睡眠充足，早上不要喝太多咖啡</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top:1.5rem; padding:1.5rem; background:var(--ink); border-radius:14px; color:rgba(255,255,255,.85);">
+    <div style="font-size:13px; font-weight:500; color:rgba(255,255,255,.45); letter-spacing:.1em; text-transform:uppercase; margin-bottom:.75rem;">最後提醒</div>
+    <p style="font-size:14.5px; line-height:1.8;">面試官選人，選的不只是能力，<strong style="color:#fff;">也在選「這個人加入後，團隊會變得更好嗎？」</strong>展示你的作品和思路，但也要展示你是一個好相處、有自覺、願意學習的人。放鬆，你已經準備得很充分了。</p>
+  </div>
+
+</div>
+</div>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+function toggleQA(item) {
+  item.classList.toggle('open');
+}
+</script>
+</body>
+</html>
