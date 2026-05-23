@@ -1,256 +1,712 @@
-
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>行銷內容產製 AI 工作流程 SOP</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  h2.sr-only { position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap }
-  .lane-label { font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase }
+:root {
+  --bg: #0A0C0F;
+  --surface: #12151A;
+  --surface2: #1A1E26;
+  --border: rgba(255,255,255,.07);
+  --border2: rgba(255,255,255,.13);
+  --ink: #EAE8E2;
+  --ink2: #888480;
+  --ink3: #4A4844;
+
+  /* phase colors */
+  --c1: #4B7BEC;   --c1bg: rgba(75,123,236,.12);
+  --c2: #A55EEA;   --c2bg: rgba(165,94,234,.12);
+  --c3: #E8673C;   --c3bg: rgba(232,103,60,.12);
+  --c4: #F7B731;   --c4bg: rgba(247,183,49,.12);
+  --c5: #26D9A4;   --c5bg: rgba(38,217,164,.12);
+  --green: #26D9A4;
+  --red: #E8503C;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ── HEADER ── */
+.page-header {
+  padding: 3rem 2.5rem 2rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.page-header::after {
+  content: 'SOP';
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Syne', sans-serif;
+  font-size: 120px;
+  font-weight: 800;
+  color: rgba(255,255,255,.025);
+  pointer-events: none;
+  line-height: 1;
+}
+.header-inner { max-width: 1200px; margin: 0 auto; }
+.header-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--c5);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-bottom: .85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.header-tag::before { content: '▶'; font-size: 7px; }
+.page-header h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: .75rem;
+  letter-spacing: -.01em;
+}
+.page-header p {
+  font-size: 13.5px;
+  color: var(--ink2);
+  max-width: 560px;
+  line-height: 1.7;
+}
+.header-meta {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+.meta-chip {
+  font-family: 'DM Mono', monospace;
+  font-size: 10.5px;
+  color: var(--ink3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.meta-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── MAIN CANVAS ── */
+.canvas { max-width: 1200px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
+
+/* ── PHASE LANE ── */
+.phase {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  animation: slideIn .5s ease both;
+}
+.phase:nth-child(1) { animation-delay: .05s; }
+.phase:nth-child(2) { animation-delay: .12s; }
+.phase:nth-child(3) { animation-delay: .19s; }
+.phase:nth-child(4) { animation-delay: .26s; }
+.phase:nth-child(5) { animation-delay: .33s; }
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.phase-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.25rem 1rem;
+  position: relative;
+}
+.phase-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .12em;
+  opacity: .5;
+  margin-bottom: .4rem;
+}
+.phase-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.phase-sub {
+  font-size: 10.5px;
+  opacity: .55;
+  margin-top: .3rem;
+  line-height: 1.4;
+}
+
+/* phase colors */
+.p1 { background: var(--c1bg); border-right: 2px solid var(--c1); }
+.p1 .phase-title { color: var(--c1); }
+.p2 { background: var(--c2bg); border-right: 2px solid var(--c2); }
+.p2 .phase-title { color: var(--c2); }
+.p3 { background: var(--c3bg); border-right: 2px solid var(--c3); }
+.p3 .phase-title { color: var(--c3); }
+.p4 { background: var(--c4bg); border-right: 2px solid var(--c4); }
+.p4 .phase-title { color: var(--c4); }
+.p5 { background: var(--c5bg); border-right: 2px solid var(--c5); }
+.p5 .phase-title { color: var(--c5); }
+
+/* ── NODES ROW ── */
+.nodes-row {
+  background: var(--surface);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ── NODE ── */
+.node {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  flex-shrink: 0;
+}
+.node-box {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: .85rem 1rem;
+  min-width: 150px;
+  max-width: 190px;
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+  cursor: default;
+  position: relative;
+}
+.node-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+}
+.node-icon {
+  font-size: 16px;
+  margin-bottom: .4rem;
+  display: block;
+}
+.node-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: .3rem;
+  line-height: 1.3;
+}
+.node-tool {
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  color: var(--ink3);
+  line-height: 1.5;
+}
+.node-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  margin-top: .45rem;
+}
+.role-ai { background: rgba(75,123,236,.15); color: var(--c1); border: 1px solid rgba(75,123,236,.25); }
+.role-human { background: rgba(247,183,49,.1); color: var(--c4); border: 1px solid rgba(247,183,49,.2); }
+.role-both { background: rgba(38,217,164,.1); color: var(--c5); border: 1px solid rgba(38,217,164,.2); }
+
+/* color accent top bar */
+.node-box.c1 { border-top: 2px solid var(--c1); }
+.node-box.c2 { border-top: 2px solid var(--c2); }
+.node-box.c3 { border-top: 2px solid var(--c3); }
+.node-box.c4 { border-top: 2px solid var(--c4); }
+.node-box.c5 { border-top: 2px solid var(--c5); }
+
+/* ── ARROWS ── */
+.arrow {
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  flex-shrink: 0;
+  color: var(--ink3);
+  font-size: 16px;
+}
+
+/* ── DECISION DIAMOND ── */
+.diamond-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0;
+}
+.diamond {
+  width: 90px; height: 90px;
+  background: var(--surface2);
+  border: 1px solid var(--c4);
+  transform: rotate(45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+.diamond-inner {
+  transform: rotate(-45deg);
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--c4);
+  line-height: 1.4;
+  padding: 4px;
+}
+.diamond-yes {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--green);
+  margin-top: 6px;
+  letter-spacing: .06em;
+}
+.diamond-no {
+  position: absolute;
+  right: -52px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--red);
+  white-space: nowrap;
+  letter-spacing: .06em;
+}
+
+/* ── LOOP HINT ── */
+.loop-hint {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .8rem 1.1rem;
+  margin: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--ink2);
+}
+.loop-hint .loop-icon {
+  font-size: 18px;
+  color: var(--red);
+  flex-shrink: 0;
+}
+.loop-hint strong { color: var(--ink); font-weight: 500; }
+
+/* ── CONNECTOR ── */
+.connector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 0;
+  color: var(--ink3);
+  font-size: 18px;
+}
+.connector.left { justify-content: flex-start; padding-left: 60px; }
+
+/* ── LEGEND ── */
+.legend {
+  margin-top: 2rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.legend-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--ink3);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  flex-basis: 100%;
+  margin-bottom: .5rem;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink2);
+}
+.legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.legend-dash {
+  width: 24px;
+  height: 1px;
+  flex-shrink: 0;
+}
+.legend-diamond {
+  width: 10px; height: 10px;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  border: 1px solid var(--c4);
+}
+
+/* ── PHASE DOTS for legend ── */
+.ph-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+/* ── TOOL BADGES ── */
+.tool-badges {
+  margin-top: 2rem;
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.tool-badges-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--ink3);
+  letter-spacing: .1em;
+  margin-right: .4rem;
+}
+.tbadge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10.5px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border2);
+  color: var(--ink2);
+}
+
+/* ── PORTFOLIO NOTE ── */
+.portfolio-note {
+  margin-top: 2rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(38,217,164,.06);
+  border: 1px solid rgba(38,217,164,.2);
+  border-radius: 12px;
+  font-size: 12.5px;
+  color: var(--ink2);
+  line-height: 1.7;
+}
+.portfolio-note strong { color: var(--c5); }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  .phase { grid-template-columns: 1fr; }
+  .phase-label { border-right: none !important; border-bottom: 2px solid; padding: .85rem 1rem; flex-direction: row; align-items: center; gap: 10px; }
+  .nodes-row { flex-direction: column; align-items: flex-start; }
+  .arrow { transform: rotate(90deg); }
+}
 </style>
-<svg width="100%" viewBox="0 0 680 1080" role="img">
-  <title>行銷內容產製 AI 工作流程 SOP</title>
-  <desc>完整行銷內容產製流程，涵蓋策略規劃、SEO文案、圖像生成、審稿修訂、發佈追蹤五大階段，標示各步驟使用的 AI 工具與負責角色。</desc>
-  <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </marker>
-  </defs>
+</head>
+<body>
 
-  <!-- ── LANE BACKGROUNDS ── -->
-  <!-- Phase 1: Strategy -->
-  <rect x="20" y="40" width="640" height="142" rx="10" fill="var(--color-background-secondary)" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
-  <text class="lane-label" x="36" y="60" fill="var(--color-text-tertiary)">Phase 1 · 策略規劃</text>
+<!-- HEADER -->
+<div class="page-header">
+  <div class="header-inner">
+    <div class="header-tag">作品集文件 · AI 行銷流程</div>
+    <h1>行銷內容產製 AI 工作流程 SOP</h1>
+    <p>從策略規劃到數據回饋的完整五階段流程，標示各步驟使用的 AI 工具、負責角色，以及審核退回的循環機制。</p>
+    <div class="header-meta">
+      <div class="meta-chip"><div class="meta-dot" style="background:var(--c1);"></div>五大階段</div>
+      <div class="meta-chip"><div class="meta-dot" style="background:var(--c2);"></div>7+ 工具整合</div>
+      <div class="meta-chip"><div class="meta-dot" style="background:var(--c5);"></div>人機協作分工標示</div>
+      <div class="meta-chip"><div class="meta-dot" style="background:var(--c4);"></div>含審核循環設計</div>
+    </div>
+  </div>
+</div>
 
-  <!-- Phase 2: SEO -->
-  <rect x="20" y="200" width="640" height="180" rx="10" fill="var(--color-background-secondary)" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
-  <text class="lane-label" x="36" y="220" fill="var(--color-text-tertiary)">Phase 2 · SEO 文案產製</text>
+<div class="canvas">
 
-  <!-- Phase 3: Image -->
-  <rect x="20" y="398" width="640" height="178" rx="10" fill="var(--color-background-secondary)" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
-  <text class="lane-label" x="36" y="418" fill="var(--color-text-tertiary)">Phase 3 · 圖像生成</text>
+  <!-- ═══ PHASE 1: STRATEGY ═══ -->
+  <div class="phase">
+    <div class="phase-label p1">
+      <div class="phase-num">PHASE 01</div>
+      <div class="phase-title">策略<br>規劃</div>
+      <div class="phase-sub">目標・受眾<br>關鍵字・月曆</div>
+    </div>
+    <div class="nodes-row">
+      <div class="node">
+        <div class="node-box c1">
+          <span class="node-icon">🎯</span>
+          <div class="node-title">主題與受眾研究</div>
+          <div class="node-tool">ChatGPT</div>
+          <span class="node-role role-both">人工 + AI</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        <div class="node-box c1">
+          <span class="node-icon">🔍</span>
+          <div class="node-title">關鍵字分析</div>
+          <div class="node-tool">Claude · Semrush</div>
+          <span class="node-role role-ai">AI 執行</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        <div class="node-box c1">
+          <span class="node-icon">📅</span>
+          <div class="node-title">內容月曆規劃</div>
+          <div class="node-tool">Claude · Notion AI</div>
+          <span class="node-role role-ai">AI 執行</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        <div class="node-box c1">
+          <span class="node-icon">✅</span>
+          <div class="node-title">方向確認</div>
+          <div class="node-tool">行銷主管決策</div>
+          <span class="node-role role-human">人工決策</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <!-- Phase 4: Review -->
-  <rect x="20" y="594" width="640" height="198" rx="10" fill="var(--color-background-secondary)" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
-  <text class="lane-label" x="36" y="614" fill="var(--color-text-tertiary)">Phase 4 · 審稿與修訂</text>
+  <div class="connector">↓</div>
 
-  <!-- Phase 5: Publish -->
-  <rect x="20" y="810" width="640" height="150" rx="10" fill="var(--color-background-secondary)" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
-  <text class="lane-label" x="36" y="830" fill="var(--color-text-tertiary)">Phase 5 · 發佈與追蹤</text>
+  <!-- ═══ PHASE 2: SEO ═══ -->
+  <div class="phase">
+    <div class="phase-label p2">
+      <div class="phase-num">PHASE 02</div>
+      <div class="phase-title">SEO<br>文案產製</div>
+      <div class="phase-sub">Prompt 設計<br>初稿・優化</div>
+    </div>
+    <div class="nodes-row">
+      <div class="node">
+        <div class="node-box c2">
+          <span class="node-icon">✏️</span>
+          <div class="node-title">Prompt 設計</div>
+          <div class="node-tool">行銷人員撰寫</div>
+          <span class="node-role role-human">人工</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        <div class="node-box c2">
+          <span class="node-icon">🤖</span>
+          <div class="node-title">AI 生成初稿</div>
+          <div class="node-tool">Claude / ChatGPT</div>
+          <span class="node-role role-ai">AI 執行</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        <div class="node-box c2">
+          <span class="node-icon">📈</span>
+          <div class="node-title">SEO 結構優化</div>
+          <div class="node-tool">Claude · SurferSEO</div>
+          <span class="node-role role-ai">AI 執行</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        <div class="node-box c2">
+          <span class="node-icon">🏷️</span>
+          <div class="node-title">Meta / CTA 撰寫</div>
+          <div class="node-tool">Claude</div>
+          <span class="node-role role-ai">AI 執行</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <!-- ══════════════════════════════════════════
-       PHASE 1: STRATEGY  (y=68..164)
-       3 boxes: x=50,240,430  w=170  h=68
-  ═══════════════════════════════════════════ -->
+  <div class="connector">↓</div>
 
-  <!-- 1a: 主題研究 -->
-  <g class="node c-gray" onclick="sendPrompt('主題研究階段要問 AI 什麼？有哪些好的 prompt 範例？')">
-    <rect x="50" y="68" width="170" height="68" rx="8" stroke-width="0.5"/>
-    <text class="th" x="135" y="96" text-anchor="middle" dominant-baseline="central">主題與受眾研究</text>
-    <text class="ts" x="135" y="118" text-anchor="middle" dominant-baseline="central">ChatGPT · 人工決策</text>
-  </g>
+  <!-- ═══ PHASE 3: IMAGE ═══ -->
+  <div class="phase">
+    <div class="phase-label p3">
+      <div class="phase-num">PHASE 03</div>
+      <div class="phase-title">圖像<br>生成</div>
+      <div class="phase-sub">概念設計<br>生成・後製</div>
+    </div>
+    <div class="nodes-row">
+      <div class="node">
+        <div class="node-box c3">
+          <span class="node-icon">💡</span>
+          <div class="node-title">圖文概念設計</div>
+          <div class="node-tool">行銷人員規劃</div>
+          <span class="node-role role-human">人工</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        <div class="node-box c3">
+          <span class="node-icon">🎨</span>
+          <div class="node-title">AI 圖像生成</div>
+          <div class="node-tool">Midjourney · DALL·E</div>
+          <span class="node-role role-ai">AI 執行</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        <div class="node-box c3">
+          <span class="node-icon">🖼️</span>
+          <div class="node-title">版面後製整合</div>
+          <div class="node-tool">Canva · Adobe</div>
+          <span class="node-role role-both">人工 + AI</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <!-- 1b: 關鍵字分析 -->
-  <g class="node c-teal" onclick="sendPrompt('用 AI 做關鍵字分析有哪些技巧？')">
-    <rect x="256" y="68" width="170" height="68" rx="8" stroke-width="0.5"/>
-    <text class="th" x="341" y="96" text-anchor="middle" dominant-baseline="central">關鍵字分析</text>
-    <text class="ts" x="341" y="118" text-anchor="middle" dominant-baseline="central">Claude · Semrush</text>
-  </g>
+  <div class="connector">↓</div>
 
-  <!-- 1c: 內容月曆 -->
-  <g class="node c-teal" onclick="sendPrompt('AI 怎麼幫助規劃內容月曆？')">
-    <rect x="462" y="68" width="170" height="68" rx="8" stroke-width="0.5"/>
-    <text class="th" x="547" y="96" text-anchor="middle" dominant-baseline="central">內容月曆規劃</text>
-    <text class="ts" x="547" y="118" text-anchor="middle" dominant-baseline="central">Claude · Notion AI</text>
-  </g>
+  <!-- ═══ PHASE 4: REVIEW ═══ -->
+  <div class="phase">
+    <div class="phase-label p4">
+      <div class="phase-num">PHASE 04</div>
+      <div class="phase-title">審稿<br>與修訂</div>
+      <div class="phase-sub">品質檢查<br>人工審核</div>
+    </div>
+    <div class="nodes-row" style="flex-wrap:wrap; row-gap: 10px;">
+      <div class="node">
+        <div class="node-box c4">
+          <span class="node-icon">🔬</span>
+          <div class="node-title">AI 品質檢查</div>
+          <div class="node-tool">Claude · Grammarly</div>
+          <span class="node-role role-ai">AI 執行</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        <div class="node-box c4">
+          <span class="node-icon">👤</span>
+          <div class="node-title">行銷主管審稿</div>
+          <div class="node-tool">人工最終判斷</div>
+          <span class="node-role role-human">人工決策</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <!-- Diamond -->
+      <div class="diamond-wrap">
+        <div class="diamond">
+          <div class="diamond-inner">審核<br>通過？</div>
+        </div>
+        <div class="diamond-yes">↓ 通過</div>
+        <div class="diamond-no">退回修改 →</div>
+      </div>
+    </div>
+  </div>
 
-  <!-- arrows phase 1 -->
-  <line x1="220" y1="102" x2="254" y2="102" class="arr" marker-end="url(#arrow)"/>
-  <line x1="426" y1="102" x2="460" y2="102" class="arr" marker-end="url(#arrow)"/>
+  <!-- Revision loop hint -->
+  <div class="loop-hint">
+    <span class="loop-icon">↺</span>
+    <div><strong>退回修改循環：</strong>根據審稿意見重新設計 Prompt，回到 Phase 02（文案問題）或 Phase 03（圖像問題），Claude / ChatGPT 協助修訂，直到審核通過為止。</div>
+  </div>
 
-  <!-- phase1 → phase2 -->
-  <line x1="340" y1="136" x2="340" y2="198" class="arr" marker-end="url(#arrow)"/>
+  <div class="connector">↓</div>
 
-  <!-- ══════════════════════════════════════════
-       PHASE 2: SEO  (y=228..358)
-       4 boxes: x=36,180,324,468  w=130  h=56 row at y=236 & y=310
-  ═══════════════════════════════════════════ -->
+  <!-- ═══ PHASE 5: PUBLISH ═══ -->
+  <div class="phase">
+    <div class="phase-label p5">
+      <div class="phase-num">PHASE 05</div>
+      <div class="phase-title">發佈<br>與追蹤</div>
+      <div class="phase-sub">排程・數據<br>洞察回饋</div>
+    </div>
+    <div class="nodes-row">
+      <div class="node">
+        <div class="node-box c5">
+          <span class="node-icon">📤</span>
+          <div class="node-title">排程自動發佈</div>
+          <div class="node-tool">Buffer · Hootsuite</div>
+          <span class="node-role role-ai">自動化</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        <div class="node-box c5">
+          <span class="node-icon">📊</span>
+          <div class="node-title">數據追蹤分析</div>
+          <div class="node-tool">GA4 · Search Console</div>
+          <span class="node-role role-ai">AI 輔助</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        <div class="node-box c5">
+          <span class="node-icon">🔄</span>
+          <div class="node-title">洞察回饋優化</div>
+          <div class="node-tool">Claude · 更新 SOP</div>
+          <span class="node-role role-both">人工 + AI</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <!-- 2a: Prompt 設計 -->
-  <g class="node c-purple" onclick="sendPrompt('SEO文案的 prompt 設計原則是什麼？')">
-    <rect x="36" y="228" width="138" height="56" rx="8" stroke-width="0.5"/>
-    <text class="th" x="105" y="250" text-anchor="middle" dominant-baseline="central">Prompt 設計</text>
-    <text class="ts" x="105" y="268" text-anchor="middle" dominant-baseline="central">行銷人員</text>
-  </g>
-
-  <!-- 2b: AI 初稿 -->
-  <g class="node c-purple" onclick="sendPrompt('AI 生成 SEO 初稿的最佳實踐？')">
-    <rect x="192" y="228" width="138" height="56" rx="8" stroke-width="0.5"/>
-    <text class="th" x="261" y="250" text-anchor="middle" dominant-baseline="central">AI 生成初稿</text>
-    <text class="ts" x="261" y="268" text-anchor="middle" dominant-baseline="central">Claude / ChatGPT</text>
-  </g>
-
-  <!-- 2c: SEO 優化 -->
-  <g class="node c-purple" onclick="sendPrompt('AI 怎麼自動優化 SEO 結構和關鍵字密度？')">
-    <rect x="348" y="228" width="138" height="56" rx="8" stroke-width="0.5"/>
-    <text class="th" x="417" y="250" text-anchor="middle" dominant-baseline="central">SEO 結構優化</text>
-    <text class="ts" x="417" y="268" text-anchor="middle" dominant-baseline="central">Claude · SurferSEO</text>
-  </g>
-
-  <!-- 2d: meta -->
-  <g class="node c-purple" onclick="sendPrompt('怎麼用 AI 寫 Meta description？')">
-    <rect x="504" y="228" width="138" height="56" rx="8" stroke-width="0.5"/>
-    <text class="th" x="573" y="248" text-anchor="middle" dominant-baseline="central">Meta / CTA</text>
-    <text class="ts" x="573" y="268" text-anchor="middle" dominant-baseline="central">Claude</text>
-  </g>
-
-  <!-- arrows phase 2 row -->
-  <line x1="174" y1="256" x2="190" y2="256" class="arr" marker-end="url(#arrow)"/>
-  <line x1="330" y1="256" x2="346" y2="256" class="arr" marker-end="url(#arrow)"/>
-  <line x1="486" y1="256" x2="502" y2="256" class="arr" marker-end="url(#arrow)"/>
-
-  <!-- 2d → phase 3 via right side down -->
-  <line x1="340" y1="284" x2="340" y2="396" class="arr" marker-end="url(#arrow)"/>
-
-  <!-- ══════════════════════════════════════════
-       PHASE 3: IMAGE  (y=426..548)
-       3 boxes: x=60,254,448  w=156  h=60
-  ═══════════════════════════════════════════ -->
-
-  <!-- 3a: 圖文概念 -->
-  <g class="node c-coral" onclick="sendPrompt('行銷人員怎麼設計圖像生成的 prompt？')">
-    <rect x="60" y="426" width="156" height="60" rx="8" stroke-width="0.5"/>
-    <text class="th" x="138" y="449" text-anchor="middle" dominant-baseline="central">圖文概念設計</text>
-    <text class="ts" x="138" y="468" text-anchor="middle" dominant-baseline="central">行銷人員</text>
-  </g>
-
-  <!-- 3b: AI 生成 -->
-  <g class="node c-coral" onclick="sendPrompt('Midjourney 和 DALL·E 在行銷圖像上各有什麼優勢？')">
-    <rect x="254" y="426" width="172" height="60" rx="8" stroke-width="0.5"/>
-    <text class="th" x="340" y="449" text-anchor="middle" dominant-baseline="central">AI 圖像生成</text>
-    <text class="ts" x="340" y="468" text-anchor="middle" dominant-baseline="central">Midjourney · DALL·E</text>
-  </g>
-
-  <!-- 3c: 後製 -->
-  <g class="node c-coral" onclick="sendPrompt('AI 生成圖像後，設計師還要做哪些後製？')">
-    <rect x="464" y="426" width="156" height="60" rx="8" stroke-width="0.5"/>
-    <text class="th" x="542" y="449" text-anchor="middle" dominant-baseline="central">版面後製整合</text>
-    <text class="ts" x="542" y="468" text-anchor="middle" dominant-baseline="central">Canva · Adobe</text>
-  </g>
-
-  <!-- arrows phase 3 -->
-  <line x1="216" y1="456" x2="252" y2="456" class="arr" marker-end="url(#arrow)"/>
-  <line x1="426" y1="456" x2="462" y2="456" class="arr" marker-end="url(#arrow)"/>
-
-  <!-- phase 3 → phase 4 -->
-  <line x1="340" y1="486" x2="340" y2="592" class="arr" marker-end="url(#arrow)"/>
-
-  <!-- ══════════════════════════════════════════
-       PHASE 4: REVIEW  (y=622..762)
-       Review flow + decision diamond
-  ═══════════════════════════════════════════ -->
-
-  <!-- 4a: AI 品質檢查 -->
-  <g class="node c-amber" onclick="sendPrompt('用 AI 做文案品質審查要注意什麼？')">
-    <rect x="60" y="622" width="160" height="60" rx="8" stroke-width="0.5"/>
-    <text class="th" x="140" y="645" text-anchor="middle" dominant-baseline="central">AI 品質檢查</text>
-    <text class="ts" x="140" y="664" text-anchor="middle" dominant-baseline="central">Claude · Grammarly</text>
-  </g>
-
-  <!-- 4b: 人工審稿 -->
-  <g class="node c-amber" onclick="sendPrompt('人工審稿階段應該重點檢查哪些項目？')">
-    <rect x="260" y="622" width="160" height="60" rx="8" stroke-width="0.5"/>
-    <text class="th" x="340" y="645" text-anchor="middle" dominant-baseline="central">行銷主管審稿</text>
-    <text class="ts" x="340" y="664" text-anchor="middle" dominant-baseline="central">人工決策</text>
-  </g>
-
-  <!-- decision diamond -->
-  <!-- diamond center: 520,652 -->
-  <polygon points="520,622 570,652 520,682 470,652" fill="var(--color-background-primary)" stroke="var(--color-border-secondary)" stroke-width="0.5"/>
-  <text class="ts" x="520" y="648" text-anchor="middle" dominant-baseline="central">通過？</text>
-  <text class="ts" x="520" y="662" text-anchor="middle" dominant-baseline="central">審核</text>
-
-  <!-- 通過 label -->
-  <text class="ts" x="530" y="700" text-anchor="start" fill="var(--color-text-success)">通過</text>
-  <!-- 退回 label -->
-  <text class="ts" x="578" y="642" text-anchor="start" fill="var(--color-text-danger)">退回修改</text>
-
-  <!-- arrows phase 4 -->
-  <line x1="220" y1="652" x2="258" y2="652" class="arr" marker-end="url(#arrow)"/>
-  <line x1="420" y1="652" x2="468" y2="652" class="arr" marker-end="url(#arrow)"/>
-
-  <!-- pass: diamond bottom → phase5 -->
-  <line x1="520" y1="682" x2="520" y2="808" class="arr" marker-end="url(#arrow)" stroke="var(--color-text-success)"/>
-
-  <!-- reject: diamond right → loop back to phase2 right edge -->
-  <path d="M570 652 L630 652 L630 256 L644 256" fill="none" stroke="var(--color-text-danger)" stroke-width="1" stroke-dasharray="5 3" marker-end="url(#arrow)"/>
-
-  <!-- 4b: revision note box -->
-  <g class="node c-amber" onclick="sendPrompt('退回修改時，怎麼讓 AI 重新生成更好的版本？')">
-    <rect x="60" y="720" width="380" height="48" rx="8" stroke-width="0.5"/>
-    <text class="th" x="250" y="741" text-anchor="middle" dominant-baseline="central">AI 協助修訂（根據審稿意見重新 prompt）</text>
-    <text class="ts" x="250" y="759" text-anchor="middle" dominant-baseline="central">Claude / ChatGPT · 循環至 Phase 2 或 3</text>
-  </g>
-  <!-- 修訂 arrow from note to phase 2 area (dashed) -->
-  <path d="M250 720 L250 696 L60 696 L60 284" fill="none" stroke="var(--color-border-secondary)" stroke-width="0.8" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
-
-  <!-- phase 4 → phase 5 center line -->
-  <line x1="340" y1="790" x2="340" y2="808" class="arr" marker-end="url(#arrow)"/>
-
-  <!-- ══════════════════════════════════════════
-       PHASE 5: PUBLISH  (y=838..934)
-       3 boxes
-  ═══════════════════════════════════════════ -->
-
-  <!-- 5a: 排程發佈 -->
-  <g class="node c-green" onclick="sendPrompt('行銷自動化工具如何排程發佈內容？')">
-    <rect x="60" y="838" width="156" height="60" rx="8" stroke-width="0.5"/>
-    <text class="th" x="138" y="861" text-anchor="middle" dominant-baseline="central">排程自動發佈</text>
-    <text class="ts" x="138" y="880" text-anchor="middle" dominant-baseline="central">Buffer · Hootsuite</text>
-  </g>
-
-  <!-- 5b: 數據追蹤 -->
-  <g class="node c-green" onclick="sendPrompt('發佈後要追蹤哪些數據？')">
-    <rect x="254" y="838" width="172" height="60" rx="8" stroke-width="0.5"/>
-    <text class="th" x="340" y="861" text-anchor="middle" dominant-baseline="central">數據追蹤分析</text>
-    <text class="ts" x="340" y="880" text-anchor="middle" dominant-baseline="central">GA4 · Search Console</text>
-  </g>
-
-  <!-- 5c: 學習回饋 -->
-  <g class="node c-green" onclick="sendPrompt('怎麼把數據洞察轉化成下一次的 AI prompt 優化？')">
-    <rect x="464" y="838" width="156" height="60" rx="8" stroke-width="0.5"/>
-    <text class="th" x="542" y="857" text-anchor="middle" dominant-baseline="central">洞察回饋優化</text>
-    <text class="ts" x="542" y="876" text-anchor="middle" dominant-baseline="central">Claude · 更新 SOP</text>
-  </g>
-
-  <!-- arrows phase 5 -->
-  <line x1="216" y1="868" x2="252" y2="868" class="arr" marker-end="url(#arrow)"/>
-  <line x1="426" y1="868" x2="462" y2="868" class="arr" marker-end="url(#arrow)"/>
-
-  <!-- feedback loop: 5c → top (dashed, left side) -->
-  <path d="M542 898 L542 960 L24 960 L24 102 L48 102" fill="none" stroke="var(--color-text-tertiary)" stroke-width="0.8" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <!-- Feedback loop hint -->
+  <div class="loop-hint" style="margin-top:6px; border-color:rgba(38,217,164,.2); background:rgba(38,217,164,.04);">
+    <span class="loop-icon" style="color:var(--c5);">⟳</span>
+    <div><strong style="color:var(--c5);">長期學習回饋：</strong>每月根據數據洞察更新關鍵字策略與 Prompt 模板，回到 Phase 01 優化下一輪內容月曆。好的 SOP 是不斷迭代的結果。</div>
+  </div>
 
   <!-- LEGEND -->
-  <rect x="36" y="988" width="600" height="72" rx="8" fill="var(--color-background-primary)" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
-  <text class="ts" x="50" y="1008" fill="var(--color-text-secondary)">圖例</text>
+  <div class="legend">
+    <div class="legend-title">圖例說明</div>
+    <div class="legend-item"><div class="ph-dot" style="background:var(--c1);"></div>策略規劃</div>
+    <div class="legend-item"><div class="ph-dot" style="background:var(--c2);"></div>SEO 文案</div>
+    <div class="legend-item"><div class="ph-dot" style="background:var(--c3);"></div>圖像生成</div>
+    <div class="legend-item"><div class="ph-dot" style="background:var(--c4);"></div>審稿修訂</div>
+    <div class="legend-item"><div class="ph-dot" style="background:var(--c5);"></div>發佈追蹤</div>
+    <div class="legend-item">
+      <span class="node-role role-ai" style="margin:0;">AI 執行</span>
+      AI 為主，人工確認輸出
+    </div>
+    <div class="legend-item">
+      <span class="node-role role-human" style="margin:0;">人工決策</span>
+      判斷與品質把關
+    </div>
+    <div class="legend-item">
+      <span class="node-role role-both" style="margin:0;">人工 + AI</span>
+      協作完成
+    </div>
+  </div>
 
-  <rect x="50" y="1020" width="12" height="12" rx="2" class="c-teal" stroke-width="0"/>
-  <text class="ts" x="68" y="1030" fill="var(--color-text-secondary)">策略 / 關鍵字</text>
+  <!-- TOOL BADGES -->
+  <div class="tool-badges">
+    <span class="tool-badges-label">使用工具</span>
+    <span class="tbadge">Claude</span>
+    <span class="tbadge">ChatGPT</span>
+    <span class="tbadge">Midjourney</span>
+    <span class="tbadge">DALL·E 3</span>
+    <span class="tbadge">SurferSEO</span>
+    <span class="tbadge">Canva</span>
+    <span class="tbadge">Adobe Express</span>
+    <span class="tbadge">Buffer</span>
+    <span class="tbadge">GA4</span>
+    <span class="tbadge">Notion AI</span>
+    <span class="tbadge">Grammarly</span>
+    <span class="tbadge">Search Console</span>
+  </div>
 
-  <rect x="170" y="1020" width="12" height="12" rx="2" class="c-purple" stroke-width="0"/>
-  <text class="ts" x="188" y="1030" fill="var(--color-text-secondary)">SEO 文案</text>
+  <!-- PORTFOLIO NOTE -->
+  <div class="portfolio-note">
+    <strong>作品說明：</strong>這張 SOP 流程圖的設計重點在於「人機分工的明確化」——每個節點都標示由 AI 執行還是人工決策，以及第四階段的審核退回循環，展示對 AI 工具在行銷工作中扮演角色的系統性理解，而不只是單點工具應用。
+  </div>
 
-  <rect x="280" y="1020" width="12" height="12" rx="2" class="c-coral" stroke-width="0"/>
-  <text class="ts" x="298" y="1030" fill="var(--color-text-secondary)">圖像生成</text>
-
-  <rect x="380" y="1020" width="12" height="12" rx="2" class="c-amber" stroke-width="0"/>
-  <text class="ts" x="398" y="1030" fill="var(--color-text-secondary)">審稿 / 修訂</text>
-
-  <rect x="490" y="1020" width="12" height="12" rx="2" class="c-green" stroke-width="0"/>
-  <text class="ts" x="508" y="1030" fill="var(--color-text-secondary)">發佈 / 追蹤</text>
-
-  <line x1="50" y1="1050" x2="90" y2="1050" stroke="var(--color-text-tertiary)" stroke-width="0.8" stroke-dasharray="5 4"/>
-  <text class="ts" x="96" y="1054" fill="var(--color-text-secondary)">循環回饋 / 退回修改</text>
-
-  <line x1="280" y1="1050" x2="320" y2="1050" stroke="var(--color-text-success)" stroke-width="1"/>
-  <text class="ts" x="326" y="1054" fill="var(--color-text-secondary)">審核通過</text>
-
-  <line x1="430" y1="1050" x2="470" y2="1050" stroke="var(--color-text-danger)" stroke-width="1" stroke-dasharray="5 3"/>
-  <text class="ts" x="476" y="1054" fill="var(--color-text-secondary)">審核退回</text>
-
-</svg>
+</div>
+</body>
+</html>
